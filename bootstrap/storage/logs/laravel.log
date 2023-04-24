@@ -1,0 +1,108 @@
+[2020-07-16 12:02:36] laravel.EMERGENCY: Unable to create configured logger. Using emergency logger. {"exception":"[object] (InvalidArgumentException(code: 0): Log [] is not defined. at E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Log\\LogManager.php:192)
+[stacktrace]
+#0 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Log\\LogManager.php(118): Illuminate\\Log\\LogManager->resolve(NULL)
+#1 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Log\\LogManager.php(98): Illuminate\\Log\\LogManager->get(NULL)
+#2 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Log\\LogManager.php(547): Illuminate\\Log\\LogManager->driver()
+#3 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Exceptions\\Handler.php(122): Illuminate\\Log\\LogManager->error('Directory name ...', Array)
+#4 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\app\\Exceptions\\Handler.php(39): Illuminate\\Foundation\\Exceptions\\Handler->report(Object(RuntimeException))
+#5 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(403): App\\Exceptions\\Handler->report(Object(RuntimeException))
+#6 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(111): Illuminate\\Foundation\\Http\\Kernel->reportException(Object(RuntimeException))
+#7 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#8 {main}
+"} 
+[2020-07-16 12:02:36] laravel.ERROR: Directory name must not be empty. {"exception":"[object] (RuntimeException(code: 0): Directory name must not be empty. at E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\symfony\\finder\\Iterator\\RecursiveDirectoryIterator.php:48)
+[stacktrace]
+#0 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\symfony\\finder\\Iterator\\RecursiveDirectoryIterator.php(48): RecursiveDirectoryIterator->__construct('', 4096)
+#1 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\symfony\\finder\\Finder.php(730): Symfony\\Component\\Finder\\Iterator\\RecursiveDirectoryIterator->__construct('', 4096, false)
+#2 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\symfony\\finder\\Finder.php(614): Symfony\\Component\\Finder\\Finder->searchInDirectory('')
+#3 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\LoadConfiguration.php(88): Symfony\\Component\\Finder\\Finder->getIterator()
+#4 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\LoadConfiguration.php(65): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->getConfigurationFiles(Object(Illuminate\\Foundation\\Application))
+#5 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\LoadConfiguration.php(39): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->loadConfigurationFiles(Object(Illuminate\\Foundation\\Application), Object(Illuminate\\Config\\Repository))
+#6 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(230): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(151): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(135): Illuminate\\Foundation\\Http\\Kernel->bootstrap()
+#9 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#10 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#11 {main}
+"} 
+[2020-07-16 12:03:10] laravel.EMERGENCY: Unable to create configured logger. Using emergency logger. {"exception":"[object] (InvalidArgumentException(code: 0): Log [] is not defined. at E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Log\\LogManager.php:192)
+[stacktrace]
+#0 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Log\\LogManager.php(118): Illuminate\\Log\\LogManager->resolve(NULL)
+#1 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Log\\LogManager.php(98): Illuminate\\Log\\LogManager->get(NULL)
+#2 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Log\\LogManager.php(547): Illuminate\\Log\\LogManager->driver()
+#3 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Exceptions\\Handler.php(122): Illuminate\\Log\\LogManager->error('Directory name ...', Array)
+#4 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\app\\Exceptions\\Handler.php(39): Illuminate\\Foundation\\Exceptions\\Handler->report(Object(RuntimeException))
+#5 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(403): App\\Exceptions\\Handler->report(Object(RuntimeException))
+#6 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(111): Illuminate\\Foundation\\Http\\Kernel->reportException(Object(RuntimeException))
+#7 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#8 {main}
+"} 
+[2020-07-16 12:03:10] laravel.ERROR: Directory name must not be empty. {"exception":"[object] (RuntimeException(code: 0): Directory name must not be empty. at E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\symfony\\finder\\Iterator\\RecursiveDirectoryIterator.php:48)
+[stacktrace]
+#0 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\symfony\\finder\\Iterator\\RecursiveDirectoryIterator.php(48): RecursiveDirectoryIterator->__construct('', 4096)
+#1 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\symfony\\finder\\Finder.php(730): Symfony\\Component\\Finder\\Iterator\\RecursiveDirectoryIterator->__construct('', 4096, false)
+#2 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\symfony\\finder\\Finder.php(614): Symfony\\Component\\Finder\\Finder->searchInDirectory('')
+#3 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\LoadConfiguration.php(88): Symfony\\Component\\Finder\\Finder->getIterator()
+#4 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\LoadConfiguration.php(65): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->getConfigurationFiles(Object(Illuminate\\Foundation\\Application))
+#5 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\LoadConfiguration.php(39): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->loadConfigurationFiles(Object(Illuminate\\Foundation\\Application), Object(Illuminate\\Config\\Repository))
+#6 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(230): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(151): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(135): Illuminate\\Foundation\\Http\\Kernel->bootstrap()
+#9 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#10 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#11 {main}
+"} 
+[2020-07-16 12:03:14] laravel.EMERGENCY: Unable to create configured logger. Using emergency logger. {"exception":"[object] (InvalidArgumentException(code: 0): Log [] is not defined. at E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Log\\LogManager.php:192)
+[stacktrace]
+#0 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Log\\LogManager.php(118): Illuminate\\Log\\LogManager->resolve(NULL)
+#1 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Log\\LogManager.php(98): Illuminate\\Log\\LogManager->get(NULL)
+#2 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Log\\LogManager.php(547): Illuminate\\Log\\LogManager->driver()
+#3 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Exceptions\\Handler.php(122): Illuminate\\Log\\LogManager->error('Directory name ...', Array)
+#4 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\app\\Exceptions\\Handler.php(39): Illuminate\\Foundation\\Exceptions\\Handler->report(Object(RuntimeException))
+#5 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(403): App\\Exceptions\\Handler->report(Object(RuntimeException))
+#6 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(111): Illuminate\\Foundation\\Http\\Kernel->reportException(Object(RuntimeException))
+#7 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#8 {main}
+"} 
+[2020-07-16 12:03:14] laravel.ERROR: Directory name must not be empty. {"exception":"[object] (RuntimeException(code: 0): Directory name must not be empty. at E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\symfony\\finder\\Iterator\\RecursiveDirectoryIterator.php:48)
+[stacktrace]
+#0 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\symfony\\finder\\Iterator\\RecursiveDirectoryIterator.php(48): RecursiveDirectoryIterator->__construct('', 4096)
+#1 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\symfony\\finder\\Finder.php(730): Symfony\\Component\\Finder\\Iterator\\RecursiveDirectoryIterator->__construct('', 4096, false)
+#2 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\symfony\\finder\\Finder.php(614): Symfony\\Component\\Finder\\Finder->searchInDirectory('')
+#3 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\LoadConfiguration.php(88): Symfony\\Component\\Finder\\Finder->getIterator()
+#4 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\LoadConfiguration.php(65): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->getConfigurationFiles(Object(Illuminate\\Foundation\\Application))
+#5 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\LoadConfiguration.php(39): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->loadConfigurationFiles(Object(Illuminate\\Foundation\\Application), Object(Illuminate\\Config\\Repository))
+#6 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(230): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(151): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(135): Illuminate\\Foundation\\Http\\Kernel->bootstrap()
+#9 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#10 E:\\xampp\\htdocs\\laravel-react-bootstrap-master\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#11 {main}
+"} 
+[2022-07-22 13:22:35] laravel.EMERGENCY: Unable to create configured logger. Using emergency logger. {"exception":"[object] (InvalidArgumentException(code: 0): Log [] is not defined. at C:\\xampp\\htdocs\\mousewaitnew\\vendor\\laravel\\framework\\src\\Illuminate\\Log\\LogManager.php:207)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\mousewaitnew\\vendor\\laravel\\framework\\src\\Illuminate\\Log\\LogManager.php(132): Illuminate\\Log\\LogManager->resolve(NULL, NULL)
+#1 C:\\xampp\\htdocs\\mousewaitnew\\vendor\\laravel\\framework\\src\\Illuminate\\Log\\LogManager.php(119): Illuminate\\Log\\LogManager->get(NULL)
+#2 C:\\xampp\\htdocs\\mousewaitnew\\vendor\\laravel\\framework\\src\\Illuminate\\Log\\LogManager.php(636): Illuminate\\Log\\LogManager->driver()
+#3 C:\\xampp\\htdocs\\mousewaitnew\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Exceptions\\Handler.php(275): Illuminate\\Log\\LogManager->error('RecursiveDirect...', Array)
+#4 C:\\xampp\\htdocs\\mousewaitnew\\app\\Exceptions\\Handler.php(39): Illuminate\\Foundation\\Exceptions\\Handler->report(Object(ValueError))
+#5 C:\\xampp\\htdocs\\mousewaitnew\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(415): App\\Exceptions\\Handler->report(Object(ValueError))
+#6 C:\\xampp\\htdocs\\mousewaitnew\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(113): Illuminate\\Foundation\\Http\\Kernel->reportException(Object(ValueError))
+#7 C:\\xampp\\htdocs\\mousewaitnew\\index.php(60): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#8 {main}
+"} 
+[2022-07-22 13:22:35] laravel.ERROR: RecursiveDirectoryIterator::__construct(): Argument #1 ($directory) cannot be empty {"exception":"[object] (ValueError(code: 0): RecursiveDirectoryIterator::__construct(): Argument #1 ($directory) cannot be empty at C:\\xampp\\htdocs\\mousewaitnew\\vendor\\symfony\\finder\\Iterator\\RecursiveDirectoryIterator.php:41)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\mousewaitnew\\vendor\\symfony\\finder\\Iterator\\RecursiveDirectoryIterator.php(41): RecursiveDirectoryIterator->__construct('', 4096)
+#1 C:\\xampp\\htdocs\\mousewaitnew\\vendor\\symfony\\finder\\Finder.php(732): Symfony\\Component\\Finder\\Iterator\\RecursiveDirectoryIterator->__construct('', 4096, false)
+#2 C:\\xampp\\htdocs\\mousewaitnew\\vendor\\symfony\\finder\\Finder.php(615): Symfony\\Component\\Finder\\Finder->searchInDirectory('')
+#3 C:\\xampp\\htdocs\\mousewaitnew\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\LoadConfiguration.php(88): Symfony\\Component\\Finder\\Finder->getIterator()
+#4 C:\\xampp\\htdocs\\mousewaitnew\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\LoadConfiguration.php(65): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->getConfigurationFiles(Object(Illuminate\\Foundation\\Application))
+#5 C:\\xampp\\htdocs\\mousewaitnew\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\LoadConfiguration.php(39): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->loadConfigurationFiles(Object(Illuminate\\Foundation\\Application), Object(Illuminate\\Config\\Repository))
+#6 C:\\xampp\\htdocs\\mousewaitnew\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(239): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\xampp\\htdocs\\mousewaitnew\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(153): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\xampp\\htdocs\\mousewaitnew\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(137): Illuminate\\Foundation\\Http\\Kernel->bootstrap()
+#9 C:\\xampp\\htdocs\\mousewaitnew\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(111): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#10 C:\\xampp\\htdocs\\mousewaitnew\\index.php(60): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#11 {main}
+"} 

@@ -1,0 +1,61 @@
+
+--------------------------------------------------------------------#startblock 
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `description` varchar(200) NOT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `slug`, `description`, `parent_id`, `created_at`, `updated_at`) VALUES
+(1, 'Auto ', '', '', 0, '2020-07-20 09:57:36', '2020-07-20 09:57:36'),
+(2, 'Beauty', '', '', 0, '2020-07-20 09:57:36', '2020-07-20 09:57:36'),
+(3, 'Children', '', '', NULL, '2020-07-20 09:58:31', '2020-07-20 09:58:31'),
+(4, 'Bevrage', '', '', NULL, '2020-07-20 09:58:31', '2020-07-20 09:58:31');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+--------------------------------------------------------------------#endblock 
+
+
+
+
+
+--------------------24-07-2020
+
+INSERT INTO `roles` (`id`, `name`, `isDeleted`, `created_at`, `updated_at`) VALUES (NULL, 'accounts', '1', current_timestamp(), current_timestamp());

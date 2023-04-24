@@ -1,0 +1,8 @@
+.product_table table{border-collapse:separate;}
+.product_table table  input[type=text]{width:400px !important;height:40px !important;margin-top:1rem}
+.product_table table textarea{width:400px !important;height:100px !important;}
+.product_table select{margin-bottom:1rem}
+.product_table table tr td{vertical-align:middle}
+.user-table thead th{text-transform:none !important;vertical-align: top !important;}
+.user-table th{font-size:.8rem}
+.user-table td{font-size:.8rem}
