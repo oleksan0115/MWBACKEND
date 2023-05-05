@@ -44,7 +44,7 @@ class WdwChatReply extends Model
 
 	  public function commentsreply()
     {
-        return $this->hasMany('App\WdwChatReplyReply','chat_reply_id','chat_reply_id')->select(['id','chat_reply_id','chat_id','reply_user_id','chat_reply_date','chat_reply_msg','no_of_likes'])->orderBy('chat_reply_date', 'DESC');
+        return $this->hasMany('App\WdwChatReplyReply','chat_reply_id','chat_reply_id')->select(['id','chat_reply_id','chat_id','reply_user_id','chat_reply_date','chat_reply_msg','no_of_likes'])->orderBy('chat_reply_date', 'ASC');
     }
     
  

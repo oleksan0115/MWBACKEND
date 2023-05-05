@@ -64,7 +64,7 @@ class TblChat extends Model
     {
         return $this->hasMany('App\Comment','chat_id','chat_id')->select(['chat_reply_id','chat_id','reply_user_id','chat_reply_msg','chat_reply_date','chat_reply_img','chat_reply_status','no_of_likes'])
 								->where
-								 ([['chat_reply_status', '=', '0'],])->orderBy('chat_reply_date', 'DESC');
+								 ([['chat_reply_status', '=', '0'],])->orderBy('chat_reply_date', 'ASC');
     }
 	
 	public function chatroom()

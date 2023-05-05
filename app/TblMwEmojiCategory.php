@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\DB;
 
 class TblMwEmojiCategory extends Model
 {
@@ -28,12 +28,13 @@ class TblMwEmojiCategory extends Model
     public function getemojidata() {
         $user = auth()->user();
         $userid = $user->user_id;
+
     return $this->hasMany('App\TblMwMycollection','emoji_category_id','id')->where
 								 ([
 								 ['isemojis', '=', '1'],
 								 ['status', '>', '0'],
 								 ['user_id', '=', $userid],
-								 ])->select(['id','product_id','product_image','emoji_category_id'])->orderBy('id', 'ASC')->groupBy('product_id');
+								 ])->select(['id','product_id','product_image', 'product_name','emoji_category_id'])->orderBy('product_name', 'ASC')->groupBy('product_id');
    }
 	
   

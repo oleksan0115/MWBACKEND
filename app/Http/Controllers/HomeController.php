@@ -316,7 +316,7 @@ class HomeController extends Controller
                             $q->where('tags_id', $id);
                             })
 							
-	                       ->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time')
+	                       ->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','mapping_url','chat_reply_update_time')
 	                     
                             ->with('tagcomposit.gettagged')
 						    ->with('chatroom')
@@ -646,7 +646,7 @@ class HomeController extends Controller
 				switch ($user_verify_type) 
 				{
 					case 'C': 
-					TblChat::where([['chat_id', '=', $chat_id ]])->update(['chat_status' => '0','chat_reply_update_time' => NOW()]); 
+					TblChat::where([['chat_id', '=', $chat_id ]])->update(['chat_status' => '0','chat_reply_update_time' => \DB::raw('NOW()')]); 
 						break;
 					case 'R': 
 					    
@@ -679,7 +679,7 @@ class HomeController extends Controller
 			
 			elseif ( $admin_action == "move") { 
 				//This action willmove the post to hub. 
-				 TblChat::where([['chat_id', '=', $chat_id ]])->update(['chat_room_id' => '0','chat_reply_update_time' => NOW()]);
+				 TblChat::where([['chat_id', '=', $chat_id ]])->update(['chat_room_id' => '0','chat_reply_update_time' => \DB::raw('NOW()')]);
         	
 				$comments = 'This post has been moved to The Hub' ; 
 				
@@ -707,7 +707,7 @@ class HomeController extends Controller
 			elseif ( $admin_action == "move-silent") { 
                 //This action willmove the post to hub. 
                  
-                TblChat::where([['chat_id', '=', $chat_id ]])->update(['chat_room_id' => '0','chat_reply_update_time' => NOW()]);
+                TblChat::where([['chat_id', '=', $chat_id ]])->update(['chat_room_id' => '0','chat_reply_update_time' => \DB::raw('NOW()')]);
              
                 $TblReport = TblReport::where('id', $reported_id)->delete();    
             
@@ -3835,8 +3835,8 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 			$entry->user_id = $user_id;
 			$entry->ip_address = $clientIP;
 			$entry->save();
-			TblChat::where([['chat_id', '=', $chat_id ]])->update(['last_taged_on' => NOW(),'chat_reply_update_time' => NOW()]);
-			Tag::where([['id', '=', $p ]])->update(['lastupdatedon' => NOW()]);
+			TblChat::where([['chat_id', '=', $chat_id ]])->update(['last_taged_on' => \DB::raw('NOW()'),'chat_reply_update_time' => \DB::raw('NOW()')]);
+			Tag::where([['id', '=', $p ]])->update(['lastupdatedon' => \DB::raw('NOW()')]);
 			}
 		
 		}
@@ -4215,7 +4215,7 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 		
 		$chatid = $request->chat_id;
 		$edit_chat_msg = $request->edit_chat_msg;					
-	    TblChat::where([['chat_id', '=', $chatid ]])->update(['chat_msg' => $edit_chat_msg,'chat_reply_update_time' => NOW()]);							
+	    TblChat::where([['chat_id', '=', $chatid ]])->update(['chat_msg' => $edit_chat_msg,'chat_reply_update_time' => \DB::raw('NOW()')]);							
 		return response()->json(['status' => 201, 'data' =>	'Post updated']);
 		}
 	}
@@ -4244,7 +4244,7 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 			TblChat::where([
 						 ['isbump', '=', 1],
 						 ['chat_id', '=', $chatid],
-						 ])->update(['chat_reply_update_time' => NOW()]);
+						 ])->update(['chat_reply_update_time' => \DB::raw('NOW()')]);
 			$bump = 'Post has been bumped up';
 			}
 			else if($type == 'down'){ // post will display 15 posts down
@@ -4274,7 +4274,7 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 				TblChat::where([
 						 ['isbump', '=', 1],
 						 ['chat_id', '=', $chatid],
-						 ])->update(['chat_reply_update_time' => NOW()]);
+						 ])->update(['chat_reply_update_time' => \DB::raw('NOW()')]);
 				 
 				$getcount  = count($getdata);
 				

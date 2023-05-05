@@ -84,7 +84,7 @@ class WdwChat extends Model
 	
 	public function comments()
     {
-        return $this->hasMany('App\WdwChatReply','chat_id','chat_id')->select(['chat_reply_id','chat_id','reply_user_id','chat_reply_msg','chat_reply_date','chat_reply_img','no_of_likes'])->orderBy('chat_reply_date', 'DESC');
+        return $this->hasMany('App\WdwChatReply','chat_id','chat_id')->select(['chat_reply_id','chat_id','reply_user_id','chat_reply_msg','chat_reply_date','chat_reply_img','no_of_likes'])->orderBy('chat_reply_date', 'ASC');
     }
 	
 	public function tagcomposit()
