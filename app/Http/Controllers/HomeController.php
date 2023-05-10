@@ -1197,11 +1197,6 @@ class HomeController extends Controller
            
                             
                             }
-                            
-                       
-							
-							
-						
 							
 							/* mail to suscribed friend(subscribe user from profile) (from mw page) */
 							
@@ -1291,29 +1286,29 @@ class HomeController extends Controller
 							else
 							{ 
 						
-							
-							
-							//$hdd_user_id = $request->hdd_user_id;
-							
-							//preg_match_all("/\(([^\]]*)\)/", $request['chat_msg'], $matches);
-							//$hdd_user_id = $matches[1];
-							//$hdd_user_id = explode(',', $hdd_user_id);
-						
-							//dd(count($hdd_user_id));
-							
-							
-							
-		   
-// $htmlEle = "<html><body><p data-name='call'>This is ItSolutionStuff.com Example 1</p><p data-name='call2'>This is ItSolutionStuff.com Example 1</p></body></html>";
-  
 
-  $domdoc = new \DOMDocument();
-$domdoc->loadHTML($request['chat_msg']);
-$xpath = new \DOMXpath($domdoc);
+//   $domdoc = new \DOMDocument();
+// $domdoc->loadHTML($request['chat_msg']);
+// $xpath = new \DOMXpath($domdoc);
   
-$query = "//span[@data-id]";
-$entries = $xpath->query($query);
-  $totag = $entries['DOMNodeList'];
+// $query = "//*[@data-id]";
+// $entries = $xpath->query($query);
+// $totag = $entries['DOMNodeList'];
+
+		$matches = array();
+		preg_match_all('/@(\w+)\s(.+?)((?=@\w|$))/s', $request['chat_msg'], $matches, PREG_SET_ORDER);
+		$words = array();
+		foreach ($matches as $match) {
+			$word = array(
+				'name' => $match[1],
+				'text' => trim($match[2])
+			);
+			$words[] = $word;
+		}
+
+		$totag = count($words);
+
+
 						
 						
 							if($request['chat_msg'] !='' && $request['chat_id'] !='' && $userid >0 &&  $request['chat_msg'] != 'Add your thoughts')
@@ -1357,22 +1352,25 @@ $entries = $xpath->query($query);
 							
 					
 							/* send mail to tag user in a commnet box  */
-							if($totag != null){
-							
-							 foreach ($entries as $p) {
-							 $hdd_user_id =  $p->getAttribute('data-id');
+							if($totag != 0){
+
+							 foreach ($words as $p) {
+							//  $hdd_user_id =  $p->getAttribute('data-id');
+
+							 $hdd_user_id =  $p['name'];
+							 $myVar = new AlertController();
+							 $alertSetting = $myVar->mailTagUser($hdd_user_id ,$user_name,$p['text'],$request['chat_id']);
 							 $tagentry = new TaggedUser;  
 							 $tagentry->user_id = $userid;
 							 $tagentry->taged_user_id = $hdd_user_id;
 							 $tagentry->chat_id = $request['chat_id'];
-							 $tagentry->comment_message = $request['chat_msg'];
+							 $tagentry->comment_message = $p['text'];
 							 $tagentry->comment_id = $lastinserid;
 							 $tagentry->taged_type = 'CR';
 							 $tagentry->save();
-							 $myVar = new AlertController();
-							 $alertSetting = $myVar->mailTagUser($hdd_user_id ,$user_name,$request['chat_msg'],$request['chat_id']);
-							}
+							 }
 							
+							 
 							}
 
 							/* send mail to tag user in a commnet box */
@@ -1386,7 +1384,6 @@ $entries = $xpath->query($query);
 								
 							 $myVar = new AlertController();
 							 $alertSetting = $myVar->mailToPostOwner($post_owner_id,$user_name,$request['chat_msg'],$request['chat_id']);
-						
 							
 							}
 							/* send mail to owner of the post if any user commnet on his post  */
@@ -1441,21 +1438,29 @@ $entries = $xpath->query($query);
 		
 		$user = auth()->user();
 		$userid = $user->user_id;
-	/* 	$auth_isverfied = $user->isvarified;
-		if($auth_isverfied == 0)
-		{			  
-			return response()->json(['status' => 201, 'data' =>array('error'=>'Your email has not been verified yet. Go to your Profile, then click on the Verify Email link to verify after you can make a post and comment') ]);
-		}
-		
-		else
-		{
-		} */
 		$chatid = $request['chat_id'];
         $message = $request['chat_reply_msg'];
         $commented_id = $request['chat_reply_id'];
 		$clientIP = request()->ip();
 	
 		
+		$user = auth()->user();
+		$userid = $user->user_id;
+		$user_name = $user->user_name;
+
+		$matches = array();
+		preg_match_all('/@(\w+)\s(.+?)((?=@\w|$))/s', $request['chat_reply_msg'], $matches, PREG_SET_ORDER);
+		$words = array();
+		foreach ($matches as $match) {
+			$word = array(
+				'name' => $match[1],
+				'text' => trim($match[2])
+			);
+			$words[] = $word;
+		}
+		
+		$totag = count($words);
+
 		if($userid > 0)
     {   
      	$rightdata =  TblUserRight::select('*')->where([['user_id', '=', $userid]])
@@ -1511,10 +1516,46 @@ $entries = $xpath->query($query);
             							$entry->chat_reply_status = 0;
             							$entry->commented_on_user_id = $commentedon_user_id;
             							$entry->save();
+										$lastinserid=$entry->id;
             							
             							$reply_id = $entry->id;
             							
             							Comment::where([['chat_reply_id', '=',$commented_id]])->update(['iscommnt' => 1 ]);
+
+
+										/* send mail to tag user in a commnet box  */
+										if($totag != 0){
+
+											foreach ($words as $p) {
+										//  $hdd_user_id =  $p->getAttribute('data-id');
+											$hdd_user_id =  $p['name'];
+											$myVar = new AlertController();
+											$alertSetting = $myVar->mailTagUser($hdd_user_id ,$user_name,$p['text'],$request['chat_id']);
+											$tagentry = new TaggedUser;  
+											$tagentry->user_id = $userid;
+											$tagentry->taged_user_id = $hdd_user_id;
+											$tagentry->chat_id = $request['chat_id'];
+											$tagentry->comment_message = $p['text'];
+											$tagentry->comment_id = $lastinserid;
+											$tagentry->taged_type = 'CR';
+											$tagentry->save();
+											}
+										}
+
+							   
+										/////////////////update///////////////////
+										// $res = TblChat::where('chat_id',$request['chat_id'])->select('user_id','chat_id')->first();
+							
+										// $post_owner_id = $res->user_id;
+									
+										// if($post_owner_id != $userid){
+											
+										// $myVar = new AlertController();
+										// $alertSetting = $myVar->mailToPostOwner($post_owner_id,$user_name,$request['chat_reply_msg'],$request['chat_id']);
+										
+										// }
+
+										/////////////////update///////////////////
             							
             							if($isprobition == 0)
                     						{ 

@@ -729,40 +729,35 @@ class AlertController extends Controller
         $url = env('APP_URL_NEW').'/disneyland/lands-talk/' . $chat_mapping_url;
 
 		 
-		$userdata = User::where([['user_name', '=', $user_name],])
-									  ->select('user_name','user_email','isvarified')
-					                  ->first();
-				if($userdata != null)
-				{
-				$user_name	  = $userdata->user_name;
-				$user_email	  = $userdata->user_email; 
-				$isvarified	  = $userdata->isvarified; 
+		// $userdata = User::where([['user_name=', '=', $user_name],])
+		// 							  ->select('user_name','user_email','isvarified')
+		// 			                  ->first();
+				return $user_name;
+				// $user_name	  = $userdata->user_name;
+				// $user_email	  = $userdata->user_email; 
+				// $isvarified	  = $userdata->isvarified; 
 				
-				if(!empty($user_email))
-				{						   
-					$to       = $user_email;			 
+				// if(!empty($user_email))
+				// {						   
+				// 	$to       = $user_email;			 
 					 
-					$comment_message = str_replace("<p>", " ", $comment_message);
-					$comment_message = str_replace("</p>", " ", $comment_message);
+				// 	$message .="Hello ".$user_name.", <br><br>"; 		 
+				// 	$message .= $taged_user_name ." tagged you in with the following comment :";  
+				// 	$message .=  $comment_message;
 					
-					$message .="Hello ".$user_name.", <br><br>"; 		 
-					$message .= $taged_user_name ." tagged you in with the following comment :";  
-					$message .=  $comment_message."<br>";
-					
-					$message .="You can also see the detail post at the following link.. <br><br>";	
-					$message .= $url."<br><br>"; 
+				// 	$message .="You can also see the detail post at the following link.. <br><br>";	
+				// 	$message .= $url."<br><br>"; 
 				 
-					$message .=  "Thanks Have fun! <br><br>"; 
-					$message .=  "Team MouseWait  <br><br>"; 
-					$message .=  "www.MouseWait.com<br>"; 
+				// 	$message .=  "Thanks Have fun! <br><br>"; 
+				// 	$message .=  "Team MouseWait  <br><br>"; 
+				// 	$message .=  "www.MouseWait.com<br>"; 
 					
-					// echo $to;
-					// echo $subject;
-					 //echo $message; die;
+				// 	// echo $to;
+				// 	// echo $subject;
+				// 	 //echo $message; die;
 				
-					mail($to, $subject, $message, $headers);
-				}
-			}
+				// 	mail($to, $subject, $message, $headers);
+				// }
 				
 				
 				
