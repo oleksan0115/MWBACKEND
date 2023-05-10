@@ -109,30 +109,70 @@ class AlertController extends Controller
 	}
 	
 	
-	public function ForgotPasswordEmail($user_name,$user_email,$passwd) 
+	public function ForgotPasswordEmail($user_id, $user_name,$user_email,$passwd) 
 	{
 	  
-		
-		$to = $user_email;
-		$subject = 'Mousewait Forgot Password';
-	   	$from = 'info@mousewait.com';
-		 
+		$message = "";
+		$from     = "info@mousewait.com"; 
+		$subject  = "Mousewait Registartion";
 		$headers  = 'MIME-Version: 1.0' . "\r\n";
 		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-		 
-		
 		$headers .= 'From: '.$from."\r\n".
 			'Reply-To: '.$from."\r\n" .
 			'X-Mailer: PHP/' . phpversion();
-		 
-	// echo($user_name);
-	// echo($user_email);
-	// dd($passwd);
 		
-		$my_message = "	Hello, Mousewait user your login details is <br />  Username: ".$user_name." <br />Password: ".$passwd."<br />Email: ".$user_email."<br /><br /><br /><br />Thanks for being a part of the MouseWait Community!<br /><br />Take care,<br /><br />MouseWait.com Support<br />https://mousewait.com";
+				
+		if(!empty($user_email))
+		{						   
+		$to      = $user_email;
+		$message = "hello";
+		$my_message_orignal = "";
+		
+		$template_Sql_Query = TblEmailTemplate::select('id','template_for','subject','template','description')->where('id', 9)->get();
+		
+		$id = $template_Sql_Query[0]['id'];
+		$template_for = $template_Sql_Query[0]['template_for'];
+		$subject = $template_Sql_Query[0]['subject'];
+		$my_message_orignal = $template_Sql_Query[0]['template'];
+		$description = $template_Sql_Query[0]['description'];
+		 
+		
+		$url =   "https://www.mousewait.com/backend/api/v1/resetConfirmationMail?uid=".$user_id;
+		  
+
+		$message = $my_message_orignal;
+		$message = str_replace('%USERNAME%', $user_name, $message);
+		$message = str_replace('%RESETURL%', $url, $message);
+		$message = str_replace('%USERPASSWORD%', $passwd, $message);
+					 
+
+
+
+		
+		mail($to, $subject, $message, $headers);
+		}
+
+		
+	// 	$to = $user_email;
+	// 	$subject = 'Mousewait Forgot Password';
+	//    	$from = 'info@mousewait.com';
+		 
+	// 	$headers  = 'MIME-Version: 1.0' . "\r\n";
+	// 	$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+		 
+		
+	// 	$headers .= 'From: '.$from."\r\n".
+	// 		'Reply-To: '.$from."\r\n" .
+	// 		'X-Mailer: PHP/' . phpversion();
+		 
+	// // echo($user_name);
+	// // echo($user_email);
+	// // dd($passwd);
+		
+	// 	$my_message = "	Hello, Mousewait user your login details is <br />  Username: ".$user_name." <br />Password: ".$passwd."<br />Email: ".$user_email."<br /><br /><br /><br />Thanks for being a part of the MouseWait Community!<br /><br />Take care,<br /><br />MouseWait.com Support<br />https://mousewait.com";
 
 	
-		mail($to, $subject, $my_message, $headers);
+	// 	mail($to, $subject, $my_message, $headers);
 		
 	}
 	

@@ -191,11 +191,12 @@ class ResetPasswordController extends APIController
 	$get_user_data = User::where([ ['user_email', '=', $email], ])->select('*')->first();
 	if($get_user_data != null)
 	{
+	$user_id = $get_user_data->user_id;
 	$passwd = $get_user_data->password;
 	$user_name = $get_user_data->user_name;
 	$user_email = $get_user_data->user_email;
 	$myVar = new AlertController();
-	$alertSetting = $myVar->ForgotPasswordEmail($user_name,$user_email,$passwd);
+	$alertSetting = $myVar->ForgotPasswordEmail($user_id, $user_name,$user_email,$passwd);
 	return response()->json(['status' => 200, 'data' =>'Ok Done !' ]);
 	} 
 	else

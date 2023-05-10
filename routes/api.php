@@ -102,6 +102,7 @@ Route::group([ 'prefix' => 'v1'], function ($router) {
 	
 	Route::post('verifyMail', 'HomeController@verifyMail'); //verifyMail
 	Route::get('confirmationMail', 'HomeController@confirmationMail');// hit when user press link from mailbox
+	Route::get('resetConfirmationMail', 'HomeController@resetConfirmationMail');// hit when user press link from mailbox
 	
 	Route::post('suscribeOrUnsuscribePost', 'HomeController@suscribeOrUnsuscribePost'); //get update via email(my posts) mw page
 	

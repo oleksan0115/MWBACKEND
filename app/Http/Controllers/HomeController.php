@@ -1525,8 +1525,9 @@ class HomeController extends Controller
 
 										/* send mail to tag user in a commnet box  */
 										if($totag != 0){
-
+												
 											foreach ($words as $p) {
+
 										//  $hdd_user_id =  $p->getAttribute('data-id');
 											$hdd_user_id =  $p['name'];
 											$myVar = new AlertController();
@@ -2654,6 +2655,29 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 		}
 		return response()->json(['status' => 201, 'data' =>	'Please Check Your Mailbox']);
 	
+	}
+
+	
+	public function resetConfirmationMail(Request $request)
+	{  
+
+		$user_id = $request->uid;
+		$ip_address =$_SERVER['REMOTE_ADDR'];
+		
+		$result = AddEmailConfirmation::select('*')->where('user_id', '=', $user_id)->get();
+		$user_res = count($result);
+	
+		 if($user_res > 0)
+				{	
+
+					User::where([['user_id', '=', $user_id ]])->update(['password' => '123456', 'user_status' => '1','isvarified' => 1,'istxtemailvarified' => 1,]);	
+				
+					AddEmailConfirmation::where('user_id', $user_id)->delete();	
+					
+					return Redirect::to(env('APP_URL_NEW').'/disneyland/lounge');
+					
+				} 
+		
 	}
 	
 	public function confirmationMail(Request $request)
