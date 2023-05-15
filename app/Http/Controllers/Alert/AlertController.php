@@ -93,9 +93,9 @@ class AlertController extends Controller
 		$template_for = $template_Sql_Query[0]['template_for'];
 		$subject = $template_Sql_Query[0]['subject'];
 		$my_message_orignal = $template_Sql_Query[0]['template'];
-		$description = $template_Sql_Query[0]['description'];
+		$description = $template_Sql_Query[0]['description'];		
 		
-		$url =   "https://www.mousewait.com/disneyland/reset_password.php?uid=".$user_id."&resetkey=".$resetkey; 
+		$url =   "<a href='"."https://www.mousewait.com/forget_confirm.php?uid=".$user_id."&resetkey=".$resetkey."'> Click here </a>"; 
 
 
 		$my_message = $my_message_orignal;
@@ -136,9 +136,13 @@ class AlertController extends Controller
 		$my_message_orignal = $template_Sql_Query[0]['template'];
 		$description = $template_Sql_Query[0]['description'];
 		 
-		
-		$url =   "https://www.mousewait.com/backend/api/v1/resetConfirmationMail?uid=".$user_id;
-		  
+		$resetkey = str_random(30);
+
+		$updateDetails = [ 'reset_password_key' => $resetkey, 'date_upd' => now() ];
+			
+		\DB::table('tbl_user')->where('user_id', $user_id)->update($updateDetails);
+
+		$url =   "<a href='"."https://www.mousewait.com/forgotpassword/confirm?uid=".$user_id."&resetkey=".$resetkey."'> Click here </a>";
 
 		$message = $my_message_orignal;
 		$message = str_replace('%USERNAME%', $user_name, $message);
@@ -768,7 +772,7 @@ class AlertController extends Controller
     
         $url = env('APP_URL_NEW').'/disneyland/lands-talk/' . $chat_mapping_url;
 
-		 
+
 		$userdata = User::where([['user_name', '=', $user_name],])
 									  ->select('user_name','user_email','isvarified')
 					                  ->first();
@@ -778,13 +782,15 @@ class AlertController extends Controller
 				$user_email	  = $userdata->user_email; 
 				$isvarified	  = $userdata->isvarified; 
 				
+				
 				if(!empty($user_email))
 				{						   
 					$to       = $user_email;			 
 					 
 					$comment_message = str_replace("<p>", " ", $comment_message);
 					$comment_message = str_replace("</p>", " ", $comment_message);
-					
+					$comment_message = str_replace('\\', "", $comment_message);
+
 					$message .="Hello ".$user_name.", <br><br>"; 		 
 					$message .= $taged_user_name ." tagged you in with the following comment :";  
 					$message .=  $comment_message."<br>";
@@ -796,10 +802,6 @@ class AlertController extends Controller
 					$message .=  "Team MouseWait  <br><br>"; 
 					$message .=  "www.MouseWait.com<br>"; 
 					
-					// echo $to;
-					// echo $subject;
-					 //echo $message; die;
-				
 					mail($to, $subject, $message, $headers);
 				}
 			}
