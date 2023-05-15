@@ -23,8 +23,5 @@ class TblUserSuscribeViaEmail extends Model
         'createdon',
         'status',
         ];
-		
-
-    
    
 }

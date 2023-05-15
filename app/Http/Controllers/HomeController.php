@@ -1200,11 +1200,19 @@ class HomeController extends Controller
 							
 							/* mail to suscribed friend(subscribe user from profile) (from mw page) */
 							
-					
-							 $sql_check =  TblUserSuscribeViaEmail::select('subscriber_user_id')
-										->where([
-								['user_id', '=', $userid],
-								['status', '=', '1'],])->get();
+							//loungeland or club 333 check user have permissoin (loungeland: 13, club: 14)
+							if($request['chat_room_id'] == 3 || $request['chat_room_id'] == 4){
+								$sql_check =  TblUserSuscribeViaEmail::join('tbl_user_rights', 'tbl_user_rights.user_id', 'tbl_user_subscribe_via_email.subscriber_user_id')
+								->where([
+									['tbl_user_rights.rights_id', '=', $request['chat_room_id'] + 10],
+									['tbl_user_subscribe_via_email.user_id', '=', $userid],
+									['tbl_user_subscribe_via_email.status', '=', '1'],])->get();
+							}
+							 
+							else $sql_check =  TblUserSuscribeViaEmail::select('subscriber_user_id')
+									->where([
+							['user_id', '=', $userid],
+							['status', '=', '1'],])->get();
 									
 								$chk_count = count($sql_check);
 					
@@ -1360,6 +1368,7 @@ class HomeController extends Controller
 							 $hdd_user_id =  $p['name'];
 							 $myVar = new AlertController();
 							 $alertSetting = $myVar->mailTagUser($hdd_user_id ,$user_name,$p['text'],$request['chat_id']);
+
 							 $tagentry = new TaggedUser;  
 							 $tagentry->user_id = $userid;
 							 $tagentry->taged_user_id = $hdd_user_id;
@@ -3832,7 +3841,7 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 		$searchtext = $request->name;
 		$searchtext=str_replace("@","",$searchtext);
 		$searchtext=str_replace(" ","%",$searchtext);
-		$total_list =  User::where([['user_name', 'LIKE', '%'. $searchtext. '%'],])->select('user_id as id','user_name as value','image')->take(30)->get();
+		$total_list =  User::where([['user_name', 'LIKE', $searchtext. '%'],])->select('user_id as id','user_name as value','image')->take(30)->get();
 		return response()->json(['status' => 200, 'data' =>	$total_list ]);
 			
 	}

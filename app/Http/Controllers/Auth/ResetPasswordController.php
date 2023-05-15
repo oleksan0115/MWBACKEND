@@ -99,6 +99,25 @@ class ResetPasswordController extends APIController
 
     }
 	
+	public function resetPassword(Request $request) {
+
+		$user_id = $request['user_id'];
+		$resetkey = $request['resetkey'];
+		$user_pass = $request['user_pass'];
+		$get_user_data = User::where([ ['user_id', '=', $user_id], ])->select('*')->first();
+		$user_name = $get_user_data->user_name;
+		$user_email = $get_user_data->user_email;
+		if($resetkey == $get_user_data->reset_password_key)
+		{
+			User::where([['user_id', '=', $user_id ]])->update(['password' => $user_pass, 'date_upd' => now(), 'reset_password_key' => '']);
+			return response()->json(['status' => 200, 'data' =>	$get_user_data ]);							 
+		} 
+		else
+		{
+			return response()->json(['status' => 200, 'data' =>	'Incorrect Current User' ]);
+		}
+	}
+
 	public function passwordResetconfirm(Request $request) {
 		
 		 $user_id  = $request['user_id'];
@@ -178,12 +197,6 @@ class ResetPasswordController extends APIController
 			{
 			return response()->json(['status' => 200, 'data' =>	'Please Login' ]);	
 			}
-			
-			
-
-					
-	 
-
 	}
 
 	public function forgotPassword(Request $request) { 	
