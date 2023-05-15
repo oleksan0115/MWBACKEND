@@ -1781,7 +1781,8 @@ class HomeController extends Controller
 		
 	    
 	}
-	$userdata = User::where('user_id',$userid)->select('user_id','user_name','user_email','image','rank','position','totalpoints','user_status','creation_date as member_since','default_park as overall_rank','user_description')->first();
+	$userdata = User::where('user_id',$userid)->select('user_id','user_name','user_email','image','rank','position','totalpoints','user_status','creation_date as member_since','default_park as overall_rank','user_description')
+        ->with('getuserlogodetails.speciallogo')->first();
 	$postdata = TblChat::where([
 								['user_id', '=', $userid],
 								['chat_status', '=', 0],])

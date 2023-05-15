@@ -111,7 +111,11 @@ class User extends Authenticatable implements JWTSubject
     {
 		return $this->belongsTo('App\TblUserSpecialLogoDetail','user_id','user_id');
     }
-	
+
+    public function getuserlogodetails()
+    {
+        return $this->hasMany('App\TblUserSpecialLogoDetail','user_id','user_id');
+    }
  	// public function allotedmenubyadmin()
     // {
 		
