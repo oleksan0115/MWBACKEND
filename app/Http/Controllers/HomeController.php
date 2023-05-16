@@ -147,8 +147,8 @@ class HomeController extends Controller
 			$permissionArray[] = '4';
 		}
 	}
-	else 
-		return response()->json(['status' => 201, 'data' =>	 $user]);	
+	// else 
+		// return response()->json(['status' => 201, 'data' =>	 $users]);	
 
 	
 	if($chat_room_id == null)
