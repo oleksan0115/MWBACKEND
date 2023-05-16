@@ -112,6 +112,7 @@ class HomeController extends Controller
 	
    
 	$user = auth()->user();
+	dd($user);
 	$get_block_chat_by_userid = [];
 	$deleted_chat_id = array();
 	$permissionArray = ['3', '4'];
