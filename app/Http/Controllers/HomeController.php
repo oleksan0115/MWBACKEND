@@ -134,8 +134,16 @@ class HomeController extends Controller
 	    
 	}
 	
+	$permissionArray = [];
+	$userpermission = TblUserRight::where([['user_id', '=', $user->user_id], ['rights_id', '=', '13']])->get();
+	if(count($userpermission) == 0) {
+		$permissionArray[] = 3;
+	}
 
-
+	$userpermission = TblUserRight::where([['user_id', '=', $user->user_id], ['rights_id', '=', '14']])->get();
+	if(count($userpermission) == 0) {
+		$permissionArray[] = 4;
+	}
 	
 	if($chat_room_id == null)
 	{
@@ -171,10 +179,11 @@ class HomeController extends Controller
 	else if($chat_room_id == 0)
 	{
 	
-		$total_list =  TblChat::where([
+		$total_list =  TblChat::join('tbl_user_rights', 'tbl_user_rights.user_id', 'tbl_chat.user_id')->where([
 							['chat_status', '=', '0'],
 							['chat_msg', 'LIKE', '%'. $searchtext. '%'],
 							['mapping_url', '!=', ''],
+
 						    //['chat_room_id', '=', $chat_room_id],
 						    ])
 						 /*    
@@ -182,11 +191,7 @@ class HomeController extends Controller
                             return $query->where('chat_room_id', '=', $chat_room_id);
                             })
 							 */
-			                
-			
-			
-							
-	                       ->select('chat_id','chat_status','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time','islock')
+	                       ->select('chat_id','chat_status','tbl_chat.user_id as user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time','islock')
 						    ->with('chatroom')
 						   ->with('user')
 						   ->with('user.getuserlogodetails.speciallogo')
@@ -202,8 +207,9 @@ class HomeController extends Controller
 	                       ->with('subscribepost')
 	                       
 							->whereNotIn('chat_id',$deleted_chat_id)
+							->whereNotIn('chat_room_id', $permissionArray)
 							// ->whereNotIn('chat_id',$stick_chat)
-	                   
+							->groupBy('user_id')
 						   ->orderBy($time, 'DESC')
 	                        ->offset($offset)
 							->take(50)
@@ -1793,12 +1799,12 @@ class HomeController extends Controller
 
 	$permissionArray = [];
 	$userpermission = TblUserRight::where([['user_id', '=', $userid], ['rights_id', '=', '13']])->get();
-	if(count($userpermission) > 0) {
+	if(count($userpermission) == 0) {
 		$permissionArray[] = 3;
 	}
 
 	$userpermission = TblUserRight::where([['user_id', '=', $userid], ['rights_id', '=', '14']])->get();
-	if(count($userpermission) > 0) {
+	if(count($userpermission) == 0) {
 		$permissionArray[] = 4;
 	}
 
