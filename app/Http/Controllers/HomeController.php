@@ -1774,12 +1774,12 @@ class HomeController extends Controller
 	if($user != null ){
 	$user_id = $user->user_id;
 	$get_block_chat_by_userid =  TblChatBlock::where
-											([
-											 ['user_id', '=', $user_id],
-											 ['status', '=', '1'],
-											 ['ban_chat_id', '!=', 'null'],
-											 ])
-											 ->select('ban_chat_id')->get();
+		([
+			['user_id', '=', $user_id],
+			['status', '=', '1'],
+			['ban_chat_id', '!=', 'null'],
+			])
+			->select('ban_chat_id')->get();
 	   
 		
 		foreach($get_block_chat_by_userid as $row)
@@ -1787,12 +1787,22 @@ class HomeController extends Controller
 			$deleted_chat_id[] = $row['ban_chat_id'];
 			
 		}	
-		
-	    
 	}
 	$userdata = User::where('user_id',$userid)->select('user_id','user_name','user_email','image','rank','position','totalpoints','user_status','creation_date as member_since','default_park as overall_rank','user_description')
         ->with('getuserlogodetails.speciallogo')->first();
-	$postdata = TblChat::where([
+
+	$permissionArray = [];
+	$userpermission = TblUserRight::where(['user_id', '=', $userid], ['rights_id', '=', '13'])->get();
+	if(count($userpermission) > 0) {
+		$permissionArray[] = 3;
+	}
+
+	$userpermission = TblUserRight::where(['user_id', '=', $userid], ['rights_id', '=', '14'])->get();
+	if(count($userpermission) > 0) {
+		$permissionArray[] = 4;
+	}
+
+	$postdata = TblChat::join('tbl_user_rights', 'tbl_user_rights.user_id', 'tbl_chat.user_id')->where([
 								['user_id', '=', $userid],
 								['chat_status', '=', 0],])
 						->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','islock')
@@ -1803,6 +1813,7 @@ class HomeController extends Controller
 	                    ->with('checksticky')
 	                    ->withCount('comments as commentcount')
 						->whereNotIn('chat_id',$deleted_chat_id)
+						->whereNotIn('chat_room_id', $permissionArray)
 						->orderBy('chat_id', 'DESC')
 	                    ->offset($offset)
 						->take(50)
