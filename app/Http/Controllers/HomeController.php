@@ -187,7 +187,7 @@ class HomeController extends Controller
 	{
 	
 		$user = Auth::user();
-		return response()->json(['status' => 201, 'data' =>	 $user]);	
+		return response()->json(['status' => 201, 'data' =>	 Auth::user()]);	
 
 		$total_list =  TblChat::where([
 							['chat_status', '=', '0'],
