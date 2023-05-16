@@ -209,7 +209,7 @@ class HomeController extends Controller
 	                       ->with('subscribepost')
 	                       
 							->whereNotIn('chat_id',$deleted_chat_id)
-							->whereNotIn('chat_room_id', $permissionArray)
+							// ->whereNotIn('chat_room_id', $permissionArray)
 							// ->whereNotIn('chat_id',$stick_chat)
 						   ->orderBy($time, 'DESC')
 	                        ->offset($offset)
