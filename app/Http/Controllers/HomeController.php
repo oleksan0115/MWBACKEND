@@ -185,6 +185,7 @@ class HomeController extends Controller
 	else if($chat_room_id == 0)
 	{
 	
+		$user = Auth::user();
 		return response()->json(['status' => 201, 'data' =>	 $user]);	
 
 		$total_list =  TblChat::where([
