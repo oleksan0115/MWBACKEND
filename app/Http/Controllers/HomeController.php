@@ -114,6 +114,8 @@ class HomeController extends Controller
 	$user = auth()->user();
 	$get_block_chat_by_userid = [];
 	$deleted_chat_id = array();
+	$permissionArray = [];
+
 	if($user != null ){
 	$user_id = $user->user_id;
 	$get_block_chat_by_userid =  TblChatBlock::where
@@ -131,19 +133,18 @@ class HomeController extends Controller
 			
 		}	
 		
+		$userpermission = TblUserRight::where([['user_id', '=', $user->user_id], ['rights_id', '=', '13']])->get();
+		if(count($userpermission) == 0) {
+			$permissionArray[] = 3;
+		}
+
+		$userpermission = TblUserRight::where([['user_id', '=', $user->user_id], ['rights_id', '=', '14']])->get();
+		if(count($userpermission) == 0) {
+			$permissionArray[] = 4;
+		}
 	    
 	}
 	
-	$permissionArray = [];
-	$userpermission = TblUserRight::where([['user_id', '=', $user->user_id], ['rights_id', '=', '13']])->get();
-	if(count($userpermission) == 0) {
-		$permissionArray[] = 3;
-	}
-
-	$userpermission = TblUserRight::where([['user_id', '=', $user->user_id], ['rights_id', '=', '14']])->get();
-	if(count($userpermission) == 0) {
-		$permissionArray[] = 4;
-	}
 	
 	if($chat_room_id == null)
 	{
