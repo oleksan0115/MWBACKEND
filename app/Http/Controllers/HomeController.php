@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use JWTAuth;
 use ShortPixel;
-use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
 use App\User;
 use App\LoginUserTracking;
@@ -186,9 +185,6 @@ class HomeController extends Controller
 	else if($chat_room_id == 0)
 	{
 	
-		$user = Auth::user();
-		return response()->json(['status' => 201, 'data' =>	 auth()->user()]);	
-
 		$total_list =  TblChat::where([
 							['chat_status', '=', '0'],
 							['chat_msg', 'LIKE', '%'. $searchtext. '%'],
