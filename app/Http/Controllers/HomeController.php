@@ -135,12 +135,12 @@ class HomeController extends Controller
 		
 		$userpermission = TblUserRight::where([['user_id', '=', $user->user_id], ['rights_id', '=', '13']])->get();
 		if(count($userpermission) == 0) {
-			$permissionArray[] = 3;
+			$permissionArray[] = '3';
 		}
 
 		$userpermission = TblUserRight::where([['user_id', '=', $user->user_id], ['rights_id', '=', '14']])->get();
 		if(count($userpermission) == 0) {
-			$permissionArray[] = 4;
+			$permissionArray[] = '4';
 		}
 	    
 	}
@@ -148,6 +148,11 @@ class HomeController extends Controller
 	
 	if($chat_room_id == null)
 	{
+
+		return response()->json([
+			'status' => 201,
+			'data' => 'aaa'], 201);
+			 
 		$total_list =  TblChat::where([
 							['chat_status', '=', '0'],
 							['chat_msg', 'LIKE', '%'. $searchtext. '%'],
