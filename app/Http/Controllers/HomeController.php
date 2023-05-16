@@ -180,7 +180,7 @@ class HomeController extends Controller
 	else if($chat_room_id == 0)
 	{
 	
-		$total_list =  TblChat::join('tbl_user_rights', 'tbl_user_rights.user_id', 'tbl_chat.user_id')->where([
+		$total_list =  TblChat::where([
 							['chat_status', '=', '0'],
 							['chat_msg', 'LIKE', '%'. $searchtext. '%'],
 							['mapping_url', '!=', ''],
@@ -192,7 +192,7 @@ class HomeController extends Controller
                             return $query->where('chat_room_id', '=', $chat_room_id);
                             })
 							 */
-	                       ->select('chat_id','chat_status','tbl_chat.user_id as user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time','islock')
+	                       ->select('chat_id','chat_status','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time','islock')
 						    ->with('chatroom')
 						   ->with('user')
 						   ->with('user.getuserlogodetails.speciallogo')
@@ -326,7 +326,7 @@ class HomeController extends Controller
 		}
 	}
 	
-	$total_list =  TblChat::join('tbl_user_rights', 'tbl_user_rights.user_id', 'tbl_chat.user_id')->where([
+	$total_list =  TblChat::where([
 							['chat_status', '=', '0'],
 							['chat_msg', 'LIKE', '%'. $searchtext. '%'],
 							['mapping_url', '!=', ''],
@@ -337,7 +337,7 @@ class HomeController extends Controller
                             $q->where('tags_id', $id);
                             })
 							
-	                       ->select('chat_id','tbl_chat.user_id as user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','mapping_url','chat_reply_update_time')
+	                       ->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','mapping_url','chat_reply_update_time')
 	                     
                             ->with('tagcomposit.gettagged')
 						    ->with('chatroom')
@@ -409,7 +409,7 @@ class HomeController extends Controller
 		}
 	}
   
-	$total_list =  TblChat::join('tbl_user_rights', 'tbl_user_rights.user_id', 'tbl_chat.user_id')->where([
+	$total_list =  TblChat::where([
 							['chat_status', '=', '0'],
 							['chat_msg', 'LIKE', '%'. $searchtext. '%'],
 							['mapping_url', '!=', ''],
@@ -419,7 +419,7 @@ class HomeController extends Controller
         //                     $q->where('tags_id', $id);
         //                     })
 							
-	                       ->select('chat_id','tbl_chat.user_id as user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time')
+	                       ->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time')
 	                     
                             ->with('tagcomposit.gettagged')
 						    ->with('chatroom')
@@ -1839,10 +1839,10 @@ class HomeController extends Controller
 		}
 	}
 
-	$postdata = TblChat::join('tbl_user_rights', 'tbl_user_rights.user_id', 'tbl_chat.user_id')->where([
-								['tbl_chat.user_id', '=', $userid],
+	$postdata = TblChat::where([
+								['user_id', '=', $userid],
 								['chat_status', '=', 0],])
-						->select('chat_id','tbl_chat.user_id as user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','islock')
+						->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','islock')
 	                    ->with('chatroom')
 						->with('topimages')
 						->with('isbookmark')
