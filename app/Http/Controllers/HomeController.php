@@ -116,11 +116,11 @@ class HomeController extends Controller
 	$deleted_chat_id = array();
 	$permissionArray = ['3', '4'];
 
-	if($chat_room_id == 0)
-			return response()->json(['status' => 201, 'data' =>	 $user]);	
+
 
 	if($user != null ){
 
+		
 	$permissionArray = [];
 	$user_id = $user->user_id;
 	$get_block_chat_by_userid =  TblChatBlock::where
