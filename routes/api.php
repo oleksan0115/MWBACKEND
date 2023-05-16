@@ -35,7 +35,7 @@ Route::group([ 'prefix' => 'v1'], function ($router) {
 	
 	Route::get('home', 'HomeController@home');
 	Route::get('home/search/post/{chat_msg}', 'HomeController@home');
-	Route::get('home/{chat_room_id}', 'HomeController@home');
+	Route::get('home/{chat_room_id}', 'HomeController@home')->middleware('auth');
 	Route::get('sticky', 'HomeController@sticky');
 	Route::post('userlist', 'HomeController@userlist');
 	Route::post('thankyou', 'HomeController@thankyou');
@@ -114,10 +114,6 @@ Route::group([ 'prefix' => 'v1'], function ($router) {
 	
 	
 	Route::post('PostLiveApi', 'HomeController@PostLiveApi');
-	
-	
-	
-	
 	
 	
 	
