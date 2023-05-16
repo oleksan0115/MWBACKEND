@@ -311,8 +311,22 @@ class HomeController extends Controller
     $gettagid =  Tag::where([['tags_name', '=', $tags_name_url],])->select('id')->first();
     $id = $gettagid->id;
 
+	$user = auth()->user();
+	$permissionArray = [];
   
-	$total_list =  TblChat::where([
+	if($user != null) {
+		$userpermission = TblUserRight::where([['user_id', '=', $user->user_id], ['rights_id', '=', '13']])->get();
+		if(count($userpermission) == 0) {
+			$permissionArray[] = 3;
+		}
+
+		$userpermission = TblUserRight::where([['user_id', '=', $user->user_id], ['rights_id', '=', '14']])->get();
+		if(count($userpermission) == 0) {
+			$permissionArray[] = 4;
+		}
+	}
+	
+	$total_list =  TblChat::join('tbl_user_rights', 'tbl_user_rights.user_id', 'tbl_chat.user_id')->where([
 							['chat_status', '=', '0'],
 							['chat_msg', 'LIKE', '%'. $searchtext. '%'],
 							['mapping_url', '!=', ''],
@@ -323,14 +337,15 @@ class HomeController extends Controller
                             $q->where('tags_id', $id);
                             })
 							
-	                       ->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','mapping_url','chat_reply_update_time')
+	                       ->select('chat_id','tbl_chat.user_id as user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','mapping_url','chat_reply_update_time')
 	                     
                             ->with('tagcomposit.gettagged')
 						    ->with('chatroom')
 						   ->with('user')
 						   ->with('topimages')
 	                       ->withCount('comments as commentcount')
-	        
+						   ->whereNotIn('chat_room_id', $permissionArray)	
+						   ->groupBy('user_id')        
 	                       ->orderBy($time, 'DESC')
 	                       ->take(50)
 	                       ->get();
@@ -379,8 +394,22 @@ class HomeController extends Controller
 	$time = 'chat_time';	
 	}
 
+	$user = auth()->user();
+	$permissionArray = [];
   
-	$total_list =  TblChat::where([
+	if($user != null) {
+		$userpermission = TblUserRight::where([['user_id', '=', $user->user_id], ['rights_id', '=', '13']])->get();
+		if(count($userpermission) == 0) {
+			$permissionArray[] = 3;
+		}
+
+		$userpermission = TblUserRight::where([['user_id', '=', $user->user_id], ['rights_id', '=', '14']])->get();
+		if(count($userpermission) == 0) {
+			$permissionArray[] = 4;
+		}
+	}
+  
+	$total_list =  TblChat::join('tbl_user_rights', 'tbl_user_rights.user_id', 'tbl_chat.user_id')->where([
 							['chat_status', '=', '0'],
 							['chat_msg', 'LIKE', '%'. $searchtext. '%'],
 							['mapping_url', '!=', ''],
@@ -390,14 +419,14 @@ class HomeController extends Controller
         //                     $q->where('tags_id', $id);
         //                     })
 							
-	                       ->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time')
+	                       ->select('chat_id','tbl_chat.user_id as user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time')
 	                     
                             ->with('tagcomposit.gettagged')
 						    ->with('chatroom')
 						   ->with('user')
 						   ->with('topimages')
 	                       ->withCount('comments as commentcount')
-	        
+							->whereNotIn('chat_room_id', $permissionArray)
 	                      ->orderBy($time, 'DESC')
 	                       ->take(50)
 	                       ->get();
