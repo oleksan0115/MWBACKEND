@@ -119,7 +119,7 @@ class HomeController extends Controller
 
 	if($user != null ){
 
-		return response()->json(['status' => 201, 'data' =>	 $user]);	
+		// return response()->json(['status' => 201, 'data' =>	 $user]);	
 
 		$permissionArray = [];
 		$user_id = $user->user_id;
