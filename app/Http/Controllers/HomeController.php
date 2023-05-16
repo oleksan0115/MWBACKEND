@@ -1841,7 +1841,7 @@ class HomeController extends Controller
 	$postdata = TblChat::join('tbl_user_rights', 'tbl_user_rights.user_id', 'tbl_chat.user_id')->where([
 								['tbl_chat.user_id', '=', $userid],
 								['chat_status', '=', 0],])
-						->select('chat_id','tbl_chat.user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','islock')
+						->select('chat_id','tbl_chat.user_id as user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','islock')
 	                    ->with('chatroom')
 						->with('topimages')
 						->with('isbookmark')
@@ -1850,6 +1850,7 @@ class HomeController extends Controller
 	                    ->withCount('comments as commentcount')
 						->whereNotIn('chat_id',$deleted_chat_id)
 						->whereNotIn('chat_room_id', $permissionArray)
+						->groupBy('user_id')
 						->orderBy('chat_id', 'DESC')
 	                    ->offset($offset)
 						->take(50)
