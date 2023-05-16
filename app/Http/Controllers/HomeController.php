@@ -114,11 +114,12 @@ class HomeController extends Controller
 	$user = auth()->user();
 	$get_block_chat_by_userid = [];
 	$deleted_chat_id = array();
-	$permissionArray = [];
+	$permissionArray = ['3', '4'];
 
 	// return response()->json(['status' => 201, 'data' =>	 $user]);
 
 	if($user != null ){
+	$permissionArray = [];
 	$user_id = $user->user_id;
 	$get_block_chat_by_userid =  TblChatBlock::where
 											([
