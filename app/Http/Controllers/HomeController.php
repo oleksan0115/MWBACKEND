@@ -1823,20 +1823,23 @@ class HomeController extends Controller
 			$deleted_chat_id[] = $row['ban_chat_id'];
 			
 		}	
-	}
-	$userdata = User::where('user_id',$userid)->select('user_id','user_name','user_email','image','rank','position','totalpoints','user_status','creation_date as member_since','default_park as overall_rank','user_description')
+
+		$userdata = User::where('user_id',$user_id)->select('user_id','user_name','user_email','image','rank','position','totalpoints','user_status','creation_date as member_since','default_park as overall_rank','user_description')
         ->with('getuserlogodetails.speciallogo')->first();
 
-	$permissionArray = [];
-	$userpermission = TblUserRight::where([['user_id', '=', $userid], ['rights_id', '=', '13']])->get();
-	if(count($userpermission) == 0) {
-		$permissionArray[] = 3;
+		$permissionArray = [];
+		$userpermission = TblUserRight::where([['user_id', '=', $user_id], ['rights_id', '=', '13']])->get();
+		if(count($userpermission) == 0) {
+			$permissionArray[] = 3;
+		}
+
+		$userpermission = TblUserRight::where([['user_id', '=', $user_id], ['rights_id', '=', '14']])->get();
+		if(count($userpermission) == 0) {
+			$permissionArray[] = 4;
+		}
 	}
 
-	$userpermission = TblUserRight::where([['user_id', '=', $userid], ['rights_id', '=', '14']])->get();
-	if(count($userpermission) == 0) {
-		$permissionArray[] = 4;
-	}
+	
 
 	return response()->json(['status' => 201, 'data' => count($userpermission) ]);
 	$postdata = TblChat::join('tbl_user_rights', 'tbl_user_rights.user_id', 'tbl_chat.user_id')->where([
