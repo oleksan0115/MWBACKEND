@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use JWTAuth;
 use ShortPixel;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
 use App\User;
 use App\LoginUserTracking;
