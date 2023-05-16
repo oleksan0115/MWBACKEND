@@ -1839,9 +1839,6 @@ class HomeController extends Controller
 		}
 	}
 
-	
-
-	return response()->json(['status' => 201, 'data' => count($userpermission) ]);
 	$postdata = TblChat::join('tbl_user_rights', 'tbl_user_rights.user_id', 'tbl_chat.user_id')->where([
 								['tbl_chat.user_id', '=', $userid],
 								['chat_status', '=', 0],])
