@@ -120,10 +120,9 @@ class HomeController extends Controller
 
 	if($user != null ){
 
-		
-	$permissionArray = [];
-	$user_id = $user->user_id;
-	$get_block_chat_by_userid =  TblChatBlock::where
+		$permissionArray = [];
+		$user_id = $user->user_id;
+		$get_block_chat_by_userid =  TblChatBlock::where
 											([
 											 ['user_id', '=', $user_id],
 											 ['status', '=', '1'],
@@ -148,7 +147,9 @@ class HomeController extends Controller
 			$permissionArray[] = '4';
 		}
 	}
-	
+	else 
+		return response()->json(['status' => 201, 'data' =>	 $user]);	
+
 	
 	if($chat_room_id == null)
 	{
