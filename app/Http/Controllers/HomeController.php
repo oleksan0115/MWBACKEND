@@ -1851,7 +1851,7 @@ class HomeController extends Controller
 	                    ->with('checksticky')
 	                    ->withCount('comments as commentcount')
 						->whereNotIn('chat_id',$deleted_chat_id)
-						->whereNotIn('chat_room_id', $permissionArray)
+						// ->whereNotIn('chat_room_id', $permissionArray)
 						->groupBy('user_id')
 						->orderBy('chat_id', 'DESC')
 	                    ->offset($offset)
