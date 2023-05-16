@@ -143,7 +143,6 @@ class HomeController extends Controller
 		if(count($userpermission) == 0) {
 			$permissionArray[] = '4';
 		}
-	    return response()->json(['status' => 201, 'data' =>	 $user]);
 	}
 	
 	
