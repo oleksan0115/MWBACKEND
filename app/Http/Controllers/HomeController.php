@@ -116,7 +116,6 @@ class HomeController extends Controller
 	$deleted_chat_id = array();
 	$permissionArray = ['3', '4'];
 
-	return response()->json(['status' => 201, 'data' =>	 $user]);	
 
 	if($user != null ){
 
