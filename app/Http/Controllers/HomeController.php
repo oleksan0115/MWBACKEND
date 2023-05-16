@@ -1792,20 +1792,20 @@ class HomeController extends Controller
         ->with('getuserlogodetails.speciallogo')->first();
 
 	$permissionArray = [];
-	$userpermission = TblUserRight::where(['user_id', '=', $userid], ['rights_id', '=', '13'])->get();
+	$userpermission = TblUserRight::where([['user_id', '=', $userid], ['rights_id', '=', '13']])->get();
 	if(count($userpermission) > 0) {
 		$permissionArray[] = 3;
 	}
 
-	$userpermission = TblUserRight::where(['user_id', '=', $userid], ['rights_id', '=', '14'])->get();
+	$userpermission = TblUserRight::where([['user_id', '=', $userid], ['rights_id', '=', '14']])->get();
 	if(count($userpermission) > 0) {
 		$permissionArray[] = 4;
 	}
 
 	$postdata = TblChat::join('tbl_user_rights', 'tbl_user_rights.user_id', 'tbl_chat.user_id')->where([
-								['user_id', '=', $userid],
+								['tbl_chat.user_id', '=', $userid],
 								['chat_status', '=', 0],])
-						->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','islock')
+						->select('chat_id','tbl_chat.user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','islock')
 	                    ->with('chatroom')
 						->with('topimages')
 						->with('isbookmark')
