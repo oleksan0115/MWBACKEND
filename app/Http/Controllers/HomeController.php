@@ -1808,6 +1808,8 @@ class HomeController extends Controller
 	
 	
 	$user = auth()->user();
+	return response()->json(['status' => 201, 'data' =>	 $user]);	
+	
 	$get_block_chat_by_userid = [];
 	$deleted_chat_id = array();
 	if($user != null ){
