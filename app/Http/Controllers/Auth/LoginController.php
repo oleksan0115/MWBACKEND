@@ -64,7 +64,7 @@ class LoginController extends APIController
                 }
                 else
                 {
-					
+					Auth::login($userdata);
 								 
 					$token = JWTAuth::fromUser($userdata);
 					
