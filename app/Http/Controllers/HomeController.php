@@ -1823,10 +1823,7 @@ class HomeController extends Controller
 			$deleted_chat_id[] = $row['ban_chat_id'];
 			
 		}	
-
-		$userdata = User::where('user_id',$user_id)->select('user_id','user_name','user_email','image','rank','position','totalpoints','user_status','creation_date as member_since','default_park as overall_rank','user_description')
-        ->with('getuserlogodetails.speciallogo')->first();
-
+		
 		$permissionArray = [];
 		$userpermission = TblUserRight::where([['user_id', '=', $user_id], ['rights_id', '=', '13']])->get();
 		if(count($userpermission) == 0) {
@@ -1838,6 +1835,10 @@ class HomeController extends Controller
 			$permissionArray[] = '4';
 		}
 	}
+
+	$userdata = User::where('user_id',$userid)->select('user_id','user_name','user_email','image','rank','position','totalpoints','user_status','creation_date as member_since','default_park as overall_rank','user_description')
+        ->with('getuserlogodetails.speciallogo')->first();
+
 
 	$postdata = TblChat::where([
 								['user_id', '=', $userid],
