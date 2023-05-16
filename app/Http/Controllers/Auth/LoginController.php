@@ -27,11 +27,7 @@ class LoginController extends APIController
 
     public function login(Request $request)
     {
-      
-
-       
-
-            $username = $request->username;
+			$username = $request->username;
             $password = $request->password;
             $loginfrom = $request->loginfrom;
      

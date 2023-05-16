@@ -116,7 +116,7 @@ class HomeController extends Controller
 	$deleted_chat_id = array();
 	$permissionArray = ['3', '4'];
 
-	// return response()->json(['status' => 201, 'data' =>	 $user]);
+	return response()->json(['status' => 201, 'data' =>	 $user]);
 
 	if($user != null ){
 	$permissionArray = [];
@@ -317,7 +317,7 @@ class HomeController extends Controller
     $id = $gettagid->id;
 
 	$user = auth()->user();
-	$permissionArray = [];
+	$permissionArray = ['3', '4'];
   
 	if($user != null) {
 		$userpermission = TblUserRight::where([['user_id', '=', $user->user_id], ['rights_id', '=', '13']])->get();
