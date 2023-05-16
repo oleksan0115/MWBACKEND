@@ -119,6 +119,8 @@ class HomeController extends Controller
 
 	if($user != null ){
 
+		return response()->json(['status' => 201, 'data' =>	 $user]);	
+
 		$permissionArray = [];
 		$user_id = $user->user_id;
 		$get_block_chat_by_userid =  TblChatBlock::where
@@ -147,7 +149,7 @@ class HomeController extends Controller
 		}
 	}
 	// else 
-		// return response()->json(['status' => 201, 'data' =>	 $users]);	
+		// return response()->json(['status' => 201, 'data' =>	 $user]);	
 
 	
 	if($chat_room_id == null)
@@ -1808,7 +1810,6 @@ class HomeController extends Controller
 	
 	
 	$user = auth()->user();
-	return response()->json(['status' => 201, 'data' =>	 $user]);	
 	
 	$get_block_chat_by_userid = [];
 	$deleted_chat_id = array();
