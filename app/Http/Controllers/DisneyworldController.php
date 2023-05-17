@@ -110,7 +110,7 @@ class DisneyworldController extends Controller
 	$user = auth()->user();
 	$get_block_chat_by_userid = [];
 	$deleted_chat_id = array();
-	return response()->json([ 'status' => 201,'data' => $chat_room_id], 201);
+	
 	if($user != null ){
 	$user_id = $user->user_id;
 	$get_block_chat_by_userid =  WdwChatBlock::where
