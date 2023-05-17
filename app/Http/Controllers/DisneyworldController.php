@@ -1385,8 +1385,6 @@ $entries = $xpath->query($query);
 					WdwChatReplyReply::where('id', $removed_id)->delete();
 					return response()->json(['status' => 201, 'data' =>	'Removed']);
 					}
-							
-
 
 					
 	 
