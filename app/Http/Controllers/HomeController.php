@@ -98,7 +98,6 @@ class HomeController extends Controller
 // to remove post for particular user not display
 
 	$forsortordefault = $request->sortordefault;
-	$user_id = $request->user_id;
 	
 	if($forsortordefault == null)
 	{
@@ -118,12 +117,12 @@ class HomeController extends Controller
 	$permissionArray = ['3', '4'];
 
 
-	if($user_id != null ){
+	if($user != null ){
 
 		// return response()->json(['status' => 201, 'data' =>	 $user]);	
 
 		$permissionArray = [];
-		// $user_id = $user->user_id;
+		$user_id = $user->user_id;
 		$get_block_chat_by_userid =  TblChatBlock::where
 											([
 											 ['user_id', '=', $user_id],
@@ -188,7 +187,7 @@ class HomeController extends Controller
 	else if($chat_room_id == 0)
 	{
 	
-		// return response()->json(['status' => 201, 'data' =>	 auth()->user()]);	
+		// return response()->json(['status' => 201, 'data' =>	 $user]);	
 
 		$total_list =  TblChat::where([
 							['chat_status', '=', '0'],
