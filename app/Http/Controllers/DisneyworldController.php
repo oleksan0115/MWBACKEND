@@ -104,7 +104,7 @@ class DisneyworldController extends Controller
     $chat_room_id = $request->chat_room_id;
     // dd($chat_room_id);
 	if($chat_room_id == null){
-	$chat_room_id = 0;
+		$chat_room_id = 0;
 	}
    
 	$user = auth()->user();
@@ -129,6 +129,9 @@ class DisneyworldController extends Controller
 		
 	    
 	}
+
+	return response()->json([ 'status' => 201,'data' => $chat_room_id], 201);
+	
 			
 		 	if($chat_room_id == null)
 			{
