@@ -116,15 +116,15 @@ class HomeController extends Controller
 	$deleted_chat_id = array();
 	$permissionArray = ['3', '4'];
 	if($request->user_id) {
-		
+
 		$permissionArray = [];
 
-		$userpermission = TblUserRight::where([['user_id', '=', $user_id], ['rights_id', '=', '13']])->get();
+		$userpermission = TblUserRight::where([['user_id', '=', $request->user_id], ['rights_id', '=', '13']])->get();
 		if(count($userpermission) == 0) {
 			$permissionArray[] = '3';
 		}
 
-		$userpermission = TblUserRight::where([['user_id', '=', $user_id], ['rights_id', '=', '14']])->get();
+		$userpermission = TblUserRight::where([['user_id', '=', $request->user_id], ['rights_id', '=', '14']])->get();
 		if(count($userpermission) == 0) {
 			$permissionArray[] = '4';
 		}
