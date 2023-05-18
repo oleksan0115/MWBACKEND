@@ -320,16 +320,17 @@ class HomeController extends Controller
     $gettagid =  Tag::where([['tags_name', '=', $tags_name_url],])->select('id')->first();
     $id = $gettagid->id;
 
-	$user = auth()->user();
+	$user = $request->user_id;
 	$permissionArray = ['3', '4'];
   
 	if($user != null) {
-		$userpermission = TblUserRight::where([['user_id', '=', $user->user_id], ['rights_id', '=', '13']])->get();
+		$permissionArray = [];
+		$userpermission = TblUserRight::where([['user_id', '=', $user], ['rights_id', '=', '13']])->get();
 		if(count($userpermission) == 0) {
 			$permissionArray[] = '3';
 		}
 
-		$userpermission = TblUserRight::where([['user_id', '=', $user->user_id], ['rights_id', '=', '14']])->get();
+		$userpermission = TblUserRight::where([['user_id', '=', $user], ['rights_id', '=', '14']])->get();
 		if(count($userpermission) == 0) {
 			$permissionArray[] = '4';
 		}
@@ -402,16 +403,17 @@ class HomeController extends Controller
 	$time = 'chat_time';	
 	}
 
-	$user = auth()->user();
+	$user = $request->user_id;
 	$permissionArray = [];
   
 	if($user != null) {
-		$userpermission = TblUserRight::where([['user_id', '=', $user->user_id], ['rights_id', '=', '13']])->get();
+		$userpermission = [];
+		$userpermission = TblUserRight::where([['user_id', '=', $user], ['rights_id', '=', '13']])->get();
 		if(count($userpermission) == 0) {
 			$permissionArray[] = '3';
 		}
 
-		$userpermission = TblUserRight::where([['user_id', '=', $user->user_id], ['rights_id', '=', '14']])->get();
+		$userpermission = TblUserRight::where([['user_id', '=', $user], ['rights_id', '=', '14']])->get();
 		if(count($userpermission) == 0) {
 			$permissionArray[] = '4';
 		}
