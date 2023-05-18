@@ -3899,6 +3899,15 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 		return response()->json(['status' => 200, 'data' =>	$total_list ]);
 			
 	}
+
+	public function getUserId(Request $request)
+	{ 
+		$searchtext = $request->name;
+		$searchtext=str_replace("@","",$searchtext);
+		$searchtext=str_replace(" ","%",$searchtext);
+		$total_list =  User::where([['user_name', '=', $searchtext],])->select('user_id as id','user_name as value','image')->get();
+		return response()->json(['status' => 200, 'data' =>	$total_list ]);
+	}
 	
 
 	public function deleteAccount(Request $request)
