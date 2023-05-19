@@ -115,16 +115,17 @@ class HomeController extends Controller
 	$get_block_chat_by_userid = [];
 	$deleted_chat_id = array();
 	$permissionArray = ['3', '4'];
-	if($request->user_id) {
+	$clientUserId = $request->user_id;
+	if($clientUserId) {
 
 		$permissionArray = [];
 
-		$userpermission = TblUserRight::where([['user_id', '=', $request->user_id], ['rights_id', '=', '13']])->get();
+		$userpermission = TblUserRight::where([['user_id', '=', $clientUserId], ['rights_id', '=', '13']])->get();
 		if(count($userpermission) == 0) {
 			$permissionArray[] = '3';
 		}
 
-		$userpermission = TblUserRight::where([['user_id', '=', $request->user_id], ['rights_id', '=', '14']])->get();
+		$userpermission = TblUserRight::where([['user_id', '=', $clientUserId], ['rights_id', '=', '14']])->get();
 		if(count($userpermission) == 0) {
 			$permissionArray[] = '4';
 		}
@@ -187,6 +188,7 @@ class HomeController extends Controller
 	
 		// return response()->json(['status' => 201, 'data' =>	 $user]);	
 
+		
 		$total_list =  TblChat::where([
 							['chat_status', '=', '0'],
 							['chat_msg', 'LIKE', '%'. $searchtext. '%'],
@@ -210,7 +212,9 @@ class HomeController extends Controller
 	                       ->withCount('comments as commentcount')
 	                       ->with('tagcomposit.gettagged')
 	                        ->with('isbookmark')
-	                       ->with('isthankyou')
+	                       ->with(['isthankyou' => function($query) use ($clientUserId) {
+								$query->where('user_id', $clientUserId);
+						   }])
 	                       ->with('checksticky')
 	                       ->with('subscribepost')
 	                       
