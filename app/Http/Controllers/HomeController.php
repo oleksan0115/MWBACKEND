@@ -131,13 +131,12 @@ class HomeController extends Controller
 		}
 	}
 
-	if($user != null ){
+	if($clientUserId){
 		// return response()->json(['status' => 201, 'data' =>	 $user]);	
 
-		$user_id = $user->user_id;
 		$get_block_chat_by_userid =  TblChatBlock::where
 											([
-											 ['user_id', '=', $user_id],
+											 ['user_id', '=', $clientUserId],
 											 ['status', '=', '1'],
 											 ['ban_chat_id', '!=', 'null'],
 											 ])
@@ -171,7 +170,9 @@ class HomeController extends Controller
 	                       ->withCount('comments as commentcount')
 	                       ->with('tagcomposit.gettagged')
 	                        ->with('isbookmark')
-	                       ->with('isthankyou')
+							->with(['isthankyou' => function($query) use ($clientUserId) {
+								$query->where('user_id', $clientUserId);
+						   }])
 	                       ->with('checksticky')
 	                       ->with('subscribepost')
 	                       ->whereNotIn('chat_id',$deleted_chat_id)
