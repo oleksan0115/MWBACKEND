@@ -246,7 +246,9 @@ class HomeController extends Controller
 	                       ->withCount('comments as commentcount')
 	                       ->with('tagcomposit.gettagged')
 	                        ->with('isbookmark')
-	                       ->with('isthankyou')
+							->with(['isthankyou' => function($query) use ($clientUserId) {
+								$query->where('user_id', $clientUserId);
+						   }])
 	                       ->with('checksticky')
 	                       ->with('subscribepost')
 	                       ->whereNotIn('chat_id',$deleted_chat_id)
