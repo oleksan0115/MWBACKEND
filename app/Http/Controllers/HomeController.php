@@ -115,6 +115,7 @@ class HomeController extends Controller
 	$get_block_chat_by_userid = [];
 	$deleted_chat_id = array();
 	$permissionArray = ['3', '4'];
+	$clientUserId = $request->user_id;
 	if($request->user_id) {
 
 		$permissionArray = [];
@@ -211,7 +212,7 @@ class HomeController extends Controller
 	                       ->with('tagcomposit.gettagged')
 	                        ->with('isbookmark')
 							->with(['isthankyou' => function($query) {
-								$query->where('user_id', $request->user_id);
+								$query->where('user_id', $clientUserId);
 							}])
 	                       ->with('checksticky')
 	                       ->with('subscribepost')
