@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 // use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\APIController;
 use JWTAuth;
+use Auth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 use App\User;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Alert\AlertController;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends APIController
 {
@@ -24,13 +26,11 @@ class LoginController extends APIController
      * @return \Illuminate\Http\JsonResponse
      */
 
+	 use AuthenticatesUsers;
+
     public function login(Request $request)
     {
-      
-
-       
-
-            $username = $request->username;
+			$username = $request->username;
             $password = $request->password;
             $loginfrom = $request->loginfrom;
      
@@ -64,7 +64,7 @@ class LoginController extends APIController
                 }
                 else
                 {
-					
+					Auth::login($userdata);
 								 
 					$token = JWTAuth::fromUser($userdata);
 					

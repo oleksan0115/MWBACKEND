@@ -104,12 +104,13 @@ class DisneyworldController extends Controller
     $chat_room_id = $request->chat_room_id;
     // dd($chat_room_id);
 	if($chat_room_id == null){
-	$chat_room_id = 0;
+		$chat_room_id = 0;
 	}
    
 	$user = auth()->user();
 	$get_block_chat_by_userid = [];
 	$deleted_chat_id = array();
+	
 	if($user != null ){
 	$user_id = $user->user_id;
 	$get_block_chat_by_userid =  WdwChatBlock::where
@@ -126,9 +127,11 @@ class DisneyworldController extends Controller
 			$deleted_chat_id[] = $row['ban_chat_id'];
 			
 		}	
-		
 	    
 	}
+
+	
+	
 			
 		 	if($chat_room_id == null)
 			{
@@ -136,12 +139,7 @@ class DisneyworldController extends Controller
 							['chat_status', '=', '0'],
 							['chat_msg', 'LIKE', '%'. $searchtext. '%'],
 							 ['chat_room_id', '=', 1],
-							])
-							->
-							orWhere([
-						    ['chat_room_id', '=', 2],
-						    ])
-						    
+							])					    
 						
 	                      ->select('chat_id','chat_status','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time','islock')
 						    ->with('chatroom')
@@ -1382,8 +1380,6 @@ $entries = $xpath->query($query);
 					WdwChatReplyReply::where('id', $removed_id)->delete();
 					return response()->json(['status' => 201, 'data' =>	'Removed']);
 					}
-							
-
 
 					
 	 

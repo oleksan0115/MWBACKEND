@@ -114,9 +114,16 @@ class HomeController extends Controller
 	$user = auth()->user();
 	$get_block_chat_by_userid = [];
 	$deleted_chat_id = array();
+	$permissionArray = ['3', '4'];
+
+
 	if($user != null ){
-	$user_id = $user->user_id;
-	$get_block_chat_by_userid =  TblChatBlock::where
+
+		// return response()->json(['status' => 201, 'data' =>	 $user]);	
+
+		$permissionArray = [];
+		$user_id = $user->user_id;
+		$get_block_chat_by_userid =  TblChatBlock::where
 											([
 											 ['user_id', '=', $user_id],
 											 ['status', '=', '1'],
@@ -131,22 +138,28 @@ class HomeController extends Controller
 			
 		}	
 		
-	    
-	}
-	
+		$userpermission = TblUserRight::where([['user_id', '=', $user_id], ['rights_id', '=', '13']])->get();
+		if(count($userpermission) == 0) {
+			$permissionArray[] = '3';
+		}
 
+		$userpermission = TblUserRight::where([['user_id', '=', $user_id], ['rights_id', '=', '14']])->get();
+		if(count($userpermission) == 0) {
+			$permissionArray[] = '4';
+		}
+	}
+	// else 
+		// return response()->json(['status' => 201, 'data' =>	 $user]);	
 
 	
 	if($chat_room_id == null)
 	{
+			 
 		$total_list =  TblChat::where([
 							['chat_status', '=', '0'],
 							['chat_msg', 'LIKE', '%'. $searchtext. '%'],
 							['mapping_url', '!=', ''],
 						    ['chat_room_id', '=', 7],
-						    ])->
-							orWhere([
-						    ['chat_room_id', '=', 1],
 						    ])
 	                       ->select('chat_id','chat_status','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time','islock')
 						    ->with('chatroom')
@@ -171,10 +184,13 @@ class HomeController extends Controller
 	else if($chat_room_id == 0)
 	{
 	
+		// return response()->json(['status' => 201, 'data' =>	 $user]);	
+
 		$total_list =  TblChat::where([
 							['chat_status', '=', '0'],
 							['chat_msg', 'LIKE', '%'. $searchtext. '%'],
 							['mapping_url', '!=', ''],
+
 						    //['chat_room_id', '=', $chat_room_id],
 						    ])
 						 /*    
@@ -182,10 +198,6 @@ class HomeController extends Controller
                             return $query->where('chat_room_id', '=', $chat_room_id);
                             })
 							 */
-			                
-			
-			
-							
 	                       ->select('chat_id','chat_status','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time','islock')
 						    ->with('chatroom')
 						   ->with('user')
@@ -202,8 +214,8 @@ class HomeController extends Controller
 	                       ->with('subscribepost')
 	                       
 							->whereNotIn('chat_id',$deleted_chat_id)
+							->whereNotIn('chat_room_id', $permissionArray)
 							// ->whereNotIn('chat_id',$stick_chat)
-	                   
 						   ->orderBy($time, 'DESC')
 	                        ->offset($offset)
 							->take(50)
@@ -304,7 +316,21 @@ class HomeController extends Controller
     $gettagid =  Tag::where([['tags_name', '=', $tags_name_url],])->select('id')->first();
     $id = $gettagid->id;
 
+	$user = auth()->user();
+	$permissionArray = ['3', '4'];
   
+	if($user != null) {
+		$userpermission = TblUserRight::where([['user_id', '=', $user->user_id], ['rights_id', '=', '13']])->get();
+		if(count($userpermission) == 0) {
+			$permissionArray[] = '3';
+		}
+
+		$userpermission = TblUserRight::where([['user_id', '=', $user->user_id], ['rights_id', '=', '14']])->get();
+		if(count($userpermission) == 0) {
+			$permissionArray[] = '4';
+		}
+	}
+	
 	$total_list =  TblChat::where([
 							['chat_status', '=', '0'],
 							['chat_msg', 'LIKE', '%'. $searchtext. '%'],
@@ -323,7 +349,7 @@ class HomeController extends Controller
 						   ->with('user')
 						   ->with('topimages')
 	                       ->withCount('comments as commentcount')
-	        
+						   ->whereNotIn('chat_room_id', $permissionArray)	  
 	                       ->orderBy($time, 'DESC')
 	                       ->take(50)
 	                       ->get();
@@ -372,6 +398,20 @@ class HomeController extends Controller
 	$time = 'chat_time';	
 	}
 
+	$user = auth()->user();
+	$permissionArray = [];
+  
+	if($user != null) {
+		$userpermission = TblUserRight::where([['user_id', '=', $user->user_id], ['rights_id', '=', '13']])->get();
+		if(count($userpermission) == 0) {
+			$permissionArray[] = '3';
+		}
+
+		$userpermission = TblUserRight::where([['user_id', '=', $user->user_id], ['rights_id', '=', '14']])->get();
+		if(count($userpermission) == 0) {
+			$permissionArray[] = '4';
+		}
+	}
   
 	$total_list =  TblChat::where([
 							['chat_status', '=', '0'],
@@ -390,7 +430,7 @@ class HomeController extends Controller
 						   ->with('user')
 						   ->with('topimages')
 	                       ->withCount('comments as commentcount')
-	        
+							->whereNotIn('chat_room_id', $permissionArray)
 	                      ->orderBy($time, 'DESC')
 	                       ->take(50)
 	                       ->get();
@@ -1769,17 +1809,18 @@ class HomeController extends Controller
 	
 	
 	$user = auth()->user();
+	
 	$get_block_chat_by_userid = [];
 	$deleted_chat_id = array();
 	if($user != null ){
 	$user_id = $user->user_id;
 	$get_block_chat_by_userid =  TblChatBlock::where
-											([
-											 ['user_id', '=', $user_id],
-											 ['status', '=', '1'],
-											 ['ban_chat_id', '!=', 'null'],
-											 ])
-											 ->select('ban_chat_id')->get();
+		([
+			['user_id', '=', $user_id],
+			['status', '=', '1'],
+			['ban_chat_id', '!=', 'null'],
+			])
+			->select('ban_chat_id')->get();
 	   
 		
 		foreach($get_block_chat_by_userid as $row)
@@ -1788,10 +1829,22 @@ class HomeController extends Controller
 			
 		}	
 		
-	    
+		$permissionArray = [];
+		$userpermission = TblUserRight::where([['user_id', '=', $user_id], ['rights_id', '=', '13']])->get();
+		if(count($userpermission) == 0) {
+			$permissionArray[] = '3';
+		}
+
+		$userpermission = TblUserRight::where([['user_id', '=', $user_id], ['rights_id', '=', '14']])->get();
+		if(count($userpermission) == 0) {
+			$permissionArray[] = '4';
+		}
 	}
+
 	$userdata = User::where('user_id',$userid)->select('user_id','user_name','user_email','image','rank','position','totalpoints','user_status','creation_date as member_since','default_park as overall_rank','user_description')
         ->with('getuserlogodetails.speciallogo')->first();
+
+
 	$postdata = TblChat::where([
 								['user_id', '=', $userid],
 								['chat_status', '=', 0],])
@@ -1803,6 +1856,7 @@ class HomeController extends Controller
 	                    ->with('checksticky')
 	                    ->withCount('comments as commentcount')
 						->whereNotIn('chat_id',$deleted_chat_id)
+						->whereNotIn('chat_room_id', $permissionArray)
 						->orderBy('chat_id', 'DESC')
 	                    ->offset($offset)
 						->take(50)
@@ -3844,6 +3898,15 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 		$total_list =  User::where([['user_name', 'LIKE', $searchtext. '%'],])->select('user_id as id','user_name as value','image')->take(30)->get();
 		return response()->json(['status' => 200, 'data' =>	$total_list ]);
 			
+	}
+
+	public function getUserId(Request $request)
+	{ 
+		$searchtext = $request->name;
+		$searchtext=str_replace("@","",$searchtext);
+		$searchtext=str_replace(" ","%",$searchtext);
+		$total_list =  User::where([['user_name', '=', $searchtext],])->select('user_id as id','user_name as value','image')->get();
+		return response()->json(['status' => 200, 'data' =>	$total_list ]);
 	}
 	
 

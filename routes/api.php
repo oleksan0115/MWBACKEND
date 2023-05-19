@@ -74,6 +74,7 @@ Route::group([ 'prefix' => 'v1'], function ($router) {
 	Route::post('tradeRequestAccept', 'HomeController@tradeRequestAccept');
 	Route::post('tradeRequestReject', 'HomeController@tradeRequestReject');
 	Route::get('getUser', 'HomeController@getUser');
+	Route::get('getUserId', 'HomeController@getUserId');
 	Route::post('editChat', 'HomeController@editChat');
 	Route::post('mWStoreBuy', 'HomeController@mWStoreBuy');
 	Route::post('likeCommentAndReply', 'HomeController@likeCommentAndReply');
@@ -114,10 +115,6 @@ Route::group([ 'prefix' => 'v1'], function ($router) {
 	
 	
 	Route::post('PostLiveApi', 'HomeController@PostLiveApi');
-	
-	
-	
-	
 	
 	
 	
