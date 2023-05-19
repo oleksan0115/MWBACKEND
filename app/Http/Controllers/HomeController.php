@@ -210,7 +210,9 @@ class HomeController extends Controller
 	                       ->withCount('comments as commentcount')
 	                       ->with('tagcomposit.gettagged')
 	                        ->with('isbookmark')
-	                       ->with('isthankyou')
+							->with(['isthankyou' => function($query) {
+								$query->where('user_id', $request->user_id);
+							}])
 	                       ->with('checksticky')
 	                       ->with('subscribepost')
 	                       
