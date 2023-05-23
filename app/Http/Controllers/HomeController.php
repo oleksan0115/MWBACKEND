@@ -4369,8 +4369,26 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 		$userid = $user->user_id;
 		if($user != null ){	
 		
-		$chatid = $request->chat_id;
-		$edit_chat_msg = $request->edit_chat_msg;					
+			$chatid = $request->chat_id;
+			$edit_chat_msg = $request->edit_chat_msg;					
+		
+			// $current_time = time();
+			// $fileName = date('Y-m-d_H-i-s', $current_time);
+			// if ($request['chat_img']) {
+			// 	$file = ''.$.'_c_img.jpg'; //c stand for Chat image
+			// 	$uploadfile = $upload_img_dir . $file;
+			// 	$path =$upload_img_dir . $file;
+			// 	$uploaddir = "/public_html/disneyland/chat_images/";
+
+			// 	if($this->upload_file($request['chat_img'],'1',$uploadfile)) {
+				
+			// 		ShortPixel\setKey("VkmJFa5o0QPqcvhFw50D");
+			// 		ShortPixel\fromFile($path)->toFiles($upload_img_dir);  
+					
+			// 		TblChat::where('chat_id', $last_inserted_id)->update(['chat_img' => $file]);
+			// 	}
+			// }
+
 	    TblChat::where([['chat_id', '=', $chatid ]])->update(['chat_msg' => $edit_chat_msg,'chat_reply_update_time' => \DB::raw('NOW()')]);							
 		return response()->json(['status' => 201, 'data' =>	'Post updated']);
 		}
