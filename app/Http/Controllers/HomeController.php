@@ -238,10 +238,7 @@ class HomeController extends Controller
 	
 	else
 	{
-		return response()->json([
-			'status' => 201,
-			'data' => $searchtext ], 201);
-	$total_list =  TblChat::where([
+		$total_list =  TblChat::where([
 							['chat_status', '=', '0'],
 							['chat_msg', 'LIKE', '%'. $searchtext. '%'],
 							['mapping_url', '!=', ''],
