@@ -142,6 +142,7 @@ class DisneyworldController extends Controller
 							])				
 							->orWhere([
 						    ['chat_room_id', '=', 2],
+							['chat_msg', 'LIKE', '%'. $searchtext. '%'],
 						    ])	    
 						
 	                      ->select('chat_id','chat_status','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time','islock')

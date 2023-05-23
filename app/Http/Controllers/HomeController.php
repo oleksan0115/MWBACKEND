@@ -155,7 +155,10 @@ class HomeController extends Controller
 	
 	if($chat_room_id == null)
 	{
-			 
+		// return response()->json([
+		// 	'status' => 201,
+		// 	'data' => $searchtext ], 201);
+
 		$total_list =  TblChat::where([
 							['chat_status', '=', '0'],
 							['chat_msg', 'LIKE', '%'. $searchtext. '%'],
@@ -164,6 +167,7 @@ class HomeController extends Controller
 						    ])
 							->orWhere([
 							['chat_room_id', '=', 1],
+							['chat_msg', 'LIKE', '%'. $searchtext. '%'],
 							])
 	                       ->select('chat_id','chat_status','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time','islock')
 						    ->with('chatroom')
@@ -234,8 +238,7 @@ class HomeController extends Controller
 	
 	else
 	{
-		
-	$total_list =  TblChat::where([
+		$total_list =  TblChat::where([
 							['chat_status', '=', '0'],
 							['chat_msg', 'LIKE', '%'. $searchtext. '%'],
 							['mapping_url', '!=', ''],
