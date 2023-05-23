@@ -115,28 +115,28 @@ class HomeController extends Controller
 	$get_block_chat_by_userid = [];
 	$deleted_chat_id = array();
 	$permissionArray = ['3', '4'];
-	if($request->user_id) {
+	$clientUserId = $request->user_id;
+	if($clientUserId) {
 
 		$permissionArray = [];
 
-		$userpermission = TblUserRight::where([['user_id', '=', $request->user_id], ['rights_id', '=', '13']])->get();
+		$userpermission = TblUserRight::where([['user_id', '=', $clientUserId], ['rights_id', '=', '13']])->get();
 		if(count($userpermission) == 0) {
 			$permissionArray[] = '3';
 		}
 
-		$userpermission = TblUserRight::where([['user_id', '=', $request->user_id], ['rights_id', '=', '14']])->get();
+		$userpermission = TblUserRight::where([['user_id', '=', $clientUserId], ['rights_id', '=', '14']])->get();
 		if(count($userpermission) == 0) {
 			$permissionArray[] = '4';
 		}
 	}
 
-	if($user != null ){
+	if($clientUserId){
 		// return response()->json(['status' => 201, 'data' =>	 $user]);	
 
-		$user_id = $user->user_id;
 		$get_block_chat_by_userid =  TblChatBlock::where
 											([
-											 ['user_id', '=', $user_id],
+											 ['user_id', '=', $clientUserId],
 											 ['status', '=', '1'],
 											 ['ban_chat_id', '!=', 'null'],
 											 ])
@@ -162,6 +162,9 @@ class HomeController extends Controller
 							['mapping_url', '!=', ''],
 						    ['chat_room_id', '=', 7],
 						    ])
+							->orWhere([
+							['chat_room_id', '=', 1],
+							])
 	                       ->select('chat_id','chat_status','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time','islock')
 						    ->with('chatroom')
 						   ->with('user')
@@ -170,7 +173,9 @@ class HomeController extends Controller
 	                       ->withCount('comments as commentcount')
 	                       ->with('tagcomposit.gettagged')
 	                        ->with('isbookmark')
-	                       ->with('isthankyou')
+							->with(['isthankyou' => function($query) use ($clientUserId) {
+								$query->where('user_id', $clientUserId);
+						   }])
 	                       ->with('checksticky')
 	                       ->with('subscribepost')
 	                       ->whereNotIn('chat_id',$deleted_chat_id)
@@ -187,6 +192,7 @@ class HomeController extends Controller
 	
 		// return response()->json(['status' => 201, 'data' =>	 $user]);	
 
+		
 		$total_list =  TblChat::where([
 							['chat_status', '=', '0'],
 							['chat_msg', 'LIKE', '%'. $searchtext. '%'],
@@ -210,7 +216,9 @@ class HomeController extends Controller
 	                       ->withCount('comments as commentcount')
 	                       ->with('tagcomposit.gettagged')
 	                        ->with('isbookmark')
-	                       ->with('isthankyou')
+	                       ->with(['isthankyou' => function($query) use ($clientUserId) {
+								$query->where('user_id', $clientUserId);
+						   }])
 	                       ->with('checksticky')
 	                       ->with('subscribepost')
 	                       
@@ -241,7 +249,9 @@ class HomeController extends Controller
 	                       ->withCount('comments as commentcount')
 	                       ->with('tagcomposit.gettagged')
 	                        ->with('isbookmark')
-	                       ->with('isthankyou')
+							->with(['isthankyou' => function($query) use ($clientUserId) {
+								$query->where('user_id', $clientUserId);
+						   }])
 	                       ->with('checksticky')
 	                       ->with('subscribepost')
 	                       ->whereNotIn('chat_id',$deleted_chat_id)
@@ -1811,15 +1821,17 @@ class HomeController extends Controller
 	$userid = $request->user_id;
 	
 	
-	$user = auth()->user();
+	// $user = auth()->user();
 	
+	$permissionArray = ['3', '4'];
+
 	$get_block_chat_by_userid = [];
 	$deleted_chat_id = array();
-	if($user != null ){
-	$user_id = $user->user_id;
+	if($userid != null ){
+	// $user_id = $user->user_id;
 	$get_block_chat_by_userid =  TblChatBlock::where
 		([
-			['user_id', '=', $user_id],
+			['user_id', '=', $userid],
 			['status', '=', '1'],
 			['ban_chat_id', '!=', 'null'],
 			])
@@ -1833,12 +1845,12 @@ class HomeController extends Controller
 		}	
 		
 		$permissionArray = [];
-		$userpermission = TblUserRight::where([['user_id', '=', $user_id], ['rights_id', '=', '13']])->get();
+		$userpermission = TblUserRight::where([['user_id', '=', $userid], ['rights_id', '=', '13']])->get();
 		if(count($userpermission) == 0) {
 			$permissionArray[] = '3';
 		}
 
-		$userpermission = TblUserRight::where([['user_id', '=', $user_id], ['rights_id', '=', '14']])->get();
+		$userpermission = TblUserRight::where([['user_id', '=', $userid], ['rights_id', '=', '14']])->get();
 		if(count($userpermission) == 0) {
 			$permissionArray[] = '4';
 		}
