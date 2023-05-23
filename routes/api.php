@@ -34,7 +34,7 @@ Route::group([ 'prefix' => 'v1'], function ($router) {
 
 	
 	Route::get('home/{user_id}', 'HomeController@home');
-	Route::get('home/search/post/{chat_msg}', 'HomeController@home');
+	Route::get('home/{user_id}/search/post/{chat_msg}', 'HomeController@home');
 	Route::get('home/{chat_room_id}/{user_id}', 'HomeController@home');
 	Route::get('sticky', 'HomeController@sticky');
 	Route::post('userlist', 'HomeController@userlist');
