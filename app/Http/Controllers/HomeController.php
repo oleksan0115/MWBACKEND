@@ -156,10 +156,6 @@ class HomeController extends Controller
 	if($chat_room_id == null)
 	{
 			 
-		return response()->json([
-			'status' => 201,
-			'data' => 'aaaaaaaa',
-			 ], 201);
 
 		$total_list =  TblChat::where([
 							['chat_status', '=', '0'],
