@@ -1824,17 +1824,17 @@ class HomeController extends Controller
 	$userid = $request->user_id;
 	
 	
-	// $user = auth()->user();
+	$user = auth()->user();
 	
 	$permissionArray = ['3', '4'];
 
 	$get_block_chat_by_userid = [];
 	$deleted_chat_id = array();
-	if($userid != null ){
-	// $user_id = $user->user_id;
+	if($user != null ){
+	$user_id = $user->user_id;
 	$get_block_chat_by_userid =  TblChatBlock::where
 		([
-			['user_id', '=', $userid],
+			['user_id', '=', $user_id],
 			['status', '=', '1'],
 			['ban_chat_id', '!=', 'null'],
 			])
@@ -1848,12 +1848,12 @@ class HomeController extends Controller
 		}	
 		
 		$permissionArray = [];
-		$userpermission = TblUserRight::where([['user_id', '=', $userid], ['rights_id', '=', '13']])->get();
+		$userpermission = TblUserRight::where([['user_id', '=', $user_id], ['rights_id', '=', '13']])->get();
 		if(count($userpermission) == 0) {
 			$permissionArray[] = '3';
 		}
 
-		$userpermission = TblUserRight::where([['user_id', '=', $userid], ['rights_id', '=', '14']])->get();
+		$userpermission = TblUserRight::where([['user_id', '=', $user_id], ['rights_id', '=', '14']])->get();
 		if(count($userpermission) == 0) {
 			$permissionArray[] = '4';
 		}
