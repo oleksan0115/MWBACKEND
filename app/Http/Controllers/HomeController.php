@@ -4573,6 +4573,7 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 	$userid = $user->user_id;		
 	$chatid = $request->chat_id;
 	$chat_room_id = $request->roomid;
+	$user_id = $request->user_id;
 	
 		if($chat_room_id==0)
 		{
@@ -4587,7 +4588,7 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 				->update(['chat_reply_update_time' => NOW(),'chat_room_id' => $chat_room_id,'showonmain' => $showonmain]);
 		
 		
-		if($userid !='')
+		if($user_id)
 			{	
 				$comments = '';
 				
