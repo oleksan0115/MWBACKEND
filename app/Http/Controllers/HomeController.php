@@ -3916,7 +3916,7 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 		// $total_list =  User::where([['user_name', 'LIKE', $searchtext. '%'],])->select('user_id as id','user_name as value','image')->take(30)->get();
 
 		if($searchtext[strlen($searchtext)-1] == '_')
-			$searchtext = substr($searchtext, 0, -1) . '\_';
+			$searchtext = substr($searchtext, 0, strlen($searchtext) - 1) . '\_';
 		$total_list = DB::select(DB::raw("SELECT user_id as id, user_name as value, image FROM tbl_user WHERE user_name LIKE '". $searchtext . "%' ". "LIMIT 30"));
 
 		return response()->json(['status' => 200, 'data' =>	$searchtext ]);
