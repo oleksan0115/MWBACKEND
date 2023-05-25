@@ -3916,10 +3916,8 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 		// $total_list =  User::where([['user_name', 'LIKE', $searchtext. '%'],])->select('user_id as id','user_name as value','image')->take(30)->get();
 
 		$total_list = DB::select(DB::raw("SELECT user_id as id, user_name as value, image FROM tbl_user WHERE user_name LIKE '". $searchtext . "%' "));
-		// $results = DB::select('SELECT * FROM users WHERE id = :id', ['id' => 1]);
 
-		// $total_list = 
-		return response()->json(['status' => 200, 'data' =>	$total_list ]);
+		return response()->json(['status' => 200, 'data' =>	array_slice($total_list, 0, 30) ]);
 			
 	}
 
