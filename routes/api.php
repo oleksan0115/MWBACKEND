@@ -94,7 +94,7 @@ Route::group([ 'prefix' => 'v1'], function ($router) {
 	Route::post('postBump', 'HomeController@postBump');
 	Route::post('postLock', 'HomeController@postLock');
 	Route::post('removePostImage', 'HomeController@removePostImage');
-	Route::post('movePost', 'HomeController@movePost');
+	Route::post('movePost/{user_id}', 'HomeController@movePost');
 	Route::post('postStickOrUnstick', 'HomeController@postStickOrUnstick');
 	Route::get('rightBar', 'HomeController@rightBar');
 	Route::get('getAssignMenuByAdmin', 'HomeController@getAssignMenuByAdmin');

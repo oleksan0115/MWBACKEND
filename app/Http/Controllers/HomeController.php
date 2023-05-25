@@ -1824,17 +1824,17 @@ class HomeController extends Controller
 	$userid = $request->user_id;
 	
 	
-	// $user = auth()->user();
+	$user = auth()->user();
 	
 	$permissionArray = ['3', '4'];
 
 	$get_block_chat_by_userid = [];
 	$deleted_chat_id = array();
-	if($userid != null ){
-	// $user_id = $user->user_id;
+	if($user != null ){
+	$user_id = $user->user_id;
 	$get_block_chat_by_userid =  TblChatBlock::where
 		([
-			['user_id', '=', $userid],
+			['user_id', '=', $user_id],
 			['status', '=', '1'],
 			['ban_chat_id', '!=', 'null'],
 			])
@@ -1848,12 +1848,12 @@ class HomeController extends Controller
 		}	
 		
 		$permissionArray = [];
-		$userpermission = TblUserRight::where([['user_id', '=', $userid], ['rights_id', '=', '13']])->get();
+		$userpermission = TblUserRight::where([['user_id', '=', $user_id], ['rights_id', '=', '13']])->get();
 		if(count($userpermission) == 0) {
 			$permissionArray[] = '3';
 		}
 
-		$userpermission = TblUserRight::where([['user_id', '=', $userid], ['rights_id', '=', '14']])->get();
+		$userpermission = TblUserRight::where([['user_id', '=', $user_id], ['rights_id', '=', '14']])->get();
 		if(count($userpermission) == 0) {
 			$permissionArray[] = '4';
 		}
@@ -4369,8 +4369,26 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 		$userid = $user->user_id;
 		if($user != null ){	
 		
-		$chatid = $request->chat_id;
-		$edit_chat_msg = $request->edit_chat_msg;					
+			$chatid = $request->chat_id;
+			$edit_chat_msg = $request->edit_chat_msg;					
+		
+			// $current_time = time();
+			// $fileName = date('Y-m-d_H-i-s', $current_time);
+			// if ($request['chat_img']) {
+			// 	$file = ''.$.'_c_img.jpg'; //c stand for Chat image
+			// 	$uploadfile = $upload_img_dir . $file;
+			// 	$path =$upload_img_dir . $file;
+			// 	$uploaddir = "/public_html/disneyland/chat_images/";
+
+			// 	if($this->upload_file($request['chat_img'],'1',$uploadfile)) {
+				
+			// 		ShortPixel\setKey("VkmJFa5o0QPqcvhFw50D");
+			// 		ShortPixel\fromFile($path)->toFiles($upload_img_dir);  
+					
+			// 		TblChat::where('chat_id', $last_inserted_id)->update(['chat_img' => $file]);
+			// 	}
+			// }
+
 	    TblChat::where([['chat_id', '=', $chatid ]])->update(['chat_msg' => $edit_chat_msg,'chat_reply_update_time' => \DB::raw('NOW()')]);							
 		return response()->json(['status' => 201, 'data' =>	'Post updated']);
 		}
@@ -4555,6 +4573,7 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 	$userid = $user->user_id;		
 	$chatid = $request->chat_id;
 	$chat_room_id = $request->roomid;
+	$user_id = $request->user_id;
 	
 		if($chat_room_id==0)
 		{
@@ -4569,7 +4588,7 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 				->update(['chat_reply_update_time' => NOW(),'chat_room_id' => $chat_room_id,'showonmain' => $showonmain]);
 		
 		
-		if($userid !='')
+		if($user_id)
 			{	
 				$comments = '';
 				
