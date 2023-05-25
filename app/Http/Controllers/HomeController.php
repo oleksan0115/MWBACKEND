@@ -1638,7 +1638,7 @@ class HomeController extends Controller
             						
 						               // $replydata=	CommentReply::where('id', '=', $entry->id)->with(['replyuser'])->get();
 						                
-						              $replydata=	CommentReply::where([['chat_id', '=', $chatid],['chat_reply_id', '=', $commented_id],])->with(['replyuser']) ->orderBy('chat_reply_date', 'DESC')->get();
+						              $replydata=	CommentReply::where([['chat_id', '=', $chatid],['chat_reply_id', '=', $commented_id],])->with(['replyuser']) ->orderBy('chat_reply_date', 'ASC')->get();
 						      
 						            
 						            

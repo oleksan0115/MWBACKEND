@@ -1318,7 +1318,7 @@ $entries = $xpath->query($query);
             						
 						               // $replydata=	CommentReply::where('id', '=', $entry->id)->with(['replyuser'])->get();
 						                
-						              $replydata=	WdwChatReplyReply::where([['chat_id', '=', $chatid],['chat_reply_id', '=', $commented_id],])->with(['replyuser']) ->orderBy('chat_reply_date', 'DESC')->get();
+						              $replydata=	WdwChatReplyReply::where([['chat_id', '=', $chatid],['chat_reply_id', '=', $commented_id],])->with(['replyuser']) ->orderBy('chat_reply_date', 'ASC')->get();
 						      
 						            
 						            
@@ -1587,7 +1587,7 @@ $entries = $xpath->query($query);
 					
 					return response()->json(['status' => 201, 'data' =>	'Post Updated Successfully']);
 					}
-					else if($type == 'WC')
+					else if($type == 'C')
 					{
 						WdwChat::where([['chat_id', '=', $update_chat_id ]])
 						->update([
@@ -1600,7 +1600,7 @@ $entries = $xpath->query($query);
 						]);
 						return response()->json(['status' => 201, 'data' =>	'Comment Updated Successfully']);
 					}
-					else if($type == 'WR')
+					else if($type == 'R')
 					{
 					WdwChatReplyReply::where([['id', '=', $id ]])
 					->update([
