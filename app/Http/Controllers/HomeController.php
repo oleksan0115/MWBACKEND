@@ -3914,7 +3914,7 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 		$searchtext=str_replace("@","",$searchtext);
 		$searchtext=str_replace(" ","%",$searchtext);
 		$total_list =  User::where([['user_name', 'LIKE', $searchtext. '%'],])->select('user_id as id','user_name as value','image')->take(30)->get();
-		return response()->json(['status' => 200, 'data' =>	$total_list ]);
+		return response()->json(['status' => 200, 'data' =>	$searchtext ]);
 			
 	}
 
