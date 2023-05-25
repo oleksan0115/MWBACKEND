@@ -3919,7 +3919,7 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 		// $results = DB::select('SELECT * FROM users WHERE id = :id', ['id' => 1]);
 
 		// $total_list = 
-		return response()->json(['status' => 200, 'data' =>	$total_list ]);
+		return response()->json(['status' => 200, 'data' => "SELECT user_id as id, user_name as value, image FROM tbl_user WHERE user_name LIKE '". $searchtext . "%' ". "LIMIT 30" ]);
 			
 	}
 
