@@ -1587,20 +1587,20 @@ $entries = $xpath->query($query);
 					
 					return response()->json(['status' => 201, 'data' =>	'Post Updated Successfully']);
 					}
-					else if($type == 'C')
+					else if($type == 'WC')
 					{
-					WdwChat::where([['chat_id', '=', $update_chat_id ]])
-					->update([
-					'chat_reply_update_time' => now(),
-					]);
-					
-					WdwChatReply::where([['chat_reply_id', '=', $update_id ]])
-					->update([
-					'chat_reply_msg' => $update_msg,
-					]);
-					return response()->json(['status' => 201, 'data' =>	'Comment Updated Successfully']);
+						WdwChat::where([['chat_id', '=', $update_chat_id ]])
+						->update([
+						'chat_reply_update_time' => now(),
+						]);
+						
+						WdwChatReply::where([['chat_reply_id', '=', $update_id ]])
+						->update([
+						'chat_reply_msg' => $update_msg,
+						]);
+						return response()->json(['status' => 201, 'data' =>	'Comment Updated Successfully']);
 					}
-					else if($type == 'R')
+					else if($type == 'WR')
 					{
 					WdwChatReplyReply::where([['id', '=', $id ]])
 					->update([
