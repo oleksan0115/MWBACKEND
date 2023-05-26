@@ -2261,10 +2261,7 @@ class HomeController extends Controller
 					$update_msg = $request['chat_reply_msg'];
 					$chat_type = $request['chat_type'];
 					$id = $request['id'];
-					
-				
-				
-					
+
 					if($type == 'P')
 					{
 					TblChat::where([['chat_id', '=', $update_chat_id ]])
