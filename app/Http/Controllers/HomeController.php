@@ -285,7 +285,7 @@ class HomeController extends Controller
 	
 	$total_list =  TblChat::where([['chat_id', '=', $stick_chatid]])
 						    
-	                       ->select('chat_id','chat_status','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','mapping_url','chat_reply_update_time','islock')
+	                       ->select('chat_id','chat_status','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','mapping_url','chat_reply_update_time','islock', 'chat_type')
 						    ->with('chatroom')
 						   ->with('user')
 						   ->with('user.getuserlogodetail.speciallogo')
@@ -357,7 +357,7 @@ class HomeController extends Controller
                             $q->where('tags_id', $id);
                             })
 							
-	                       ->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','mapping_url','chat_reply_update_time')
+	                       ->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','mapping_url','chat_reply_update_time', 'chat_type')
 	                     
                             ->with('tagcomposit.gettagged')
 						    ->with('chatroom')
@@ -439,7 +439,7 @@ class HomeController extends Controller
         //                     $q->where('tags_id', $id);
         //                     })
 							
-	                       ->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time')
+	                       ->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time', 'chat_type')
 	                     
                             ->with('tagcomposit.gettagged')
 						    ->with('chatroom')
@@ -1021,7 +1021,7 @@ class HomeController extends Controller
 	{  
 
 	$chatid = $request->id;
-	$postdetail =  TblChat::select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes')
+	$postdetail =  TblChat::select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes', 'chat_type')
 							->with('user')
 						   ->with('topimages')
 	                       ->with('thanks')
@@ -1867,7 +1867,7 @@ class HomeController extends Controller
 	$postdata = TblChat::where([
 								['user_id', '=', $userid],
 								['chat_status', '=', 0],])
-						->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','islock')
+						->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','islock', 'chat_type')
 	                    ->with('chatroom')
 						->with('topimages')
 						->with('isbookmark')
@@ -4685,7 +4685,7 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 	$d_startdate = date('Y-m-d',strtotime("-1 days")); //date('Y-m-d'); 
 	$d_enddate =  date('Y-m-d');
 	$bestoftheday = [];		
-	$bestoftheday = 	TblChat::select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','iswatermark','mapping_url','chat_status',DB::raw('(no_of_likes + no_of_thanks) as chat_total_thank_and_like'))
+	$bestoftheday = 	TblChat::select('chat_id','user_id','chat_msg','chat_img', 'chat_type','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','iswatermark','mapping_url','chat_status',DB::raw('(no_of_likes + no_of_thanks) as chat_total_thank_and_like'))
 						->with('user',function ($query) {$query->where('user_status','=','1');})
 						// ->withCount('comments as commentcount')
 						->where('chat_status','=','0')
@@ -4703,7 +4703,7 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 	$w_startdate = date('Y-m-d', strtotime("-$dayofweek day") );
 	$w_enddate =   date('Y-m-d', strtotime("+$weekend day") );
 	$bestoftheweek = [];		
-	$bestoftheweek = 	TblChat::select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','iswatermark','mapping_url','chat_status',DB::raw('(no_of_likes + no_of_thanks) as chat_total_thank_and_like'))
+	$bestoftheweek = 	TblChat::select('chat_id','user_id','chat_msg','chat_img', 'chat_type','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','iswatermark','mapping_url','chat_status',DB::raw('(no_of_likes + no_of_thanks) as chat_total_thank_and_like'))
 						->with('user',function ($query) {$query->where('user_status','=','1');})
 						// ->withCount('comments as commentcount')
 						->where('chat_status','=','0')
@@ -4722,7 +4722,7 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 	$m_startdate = date('Y-m-d', strtotime(date('m').'/01/'.date('Y').' 00:00:00'));
 	$m_enddate =   date('Y-m-d', strtotime('-1 second',strtotime('+1 month',strtotime(date('m').'/01/'.date('Y').' 00:00:00')))); 
 	$bestofthemonth = [];		
-	$bestofthemonth = 	TblChat::select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','iswatermark','mapping_url','chat_status',DB::raw('(no_of_likes + no_of_thanks) as chat_total_thank_and_like'))
+	$bestofthemonth = 	TblChat::select('chat_id','user_id','chat_msg','chat_img', 'chat_type','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','iswatermark','mapping_url','chat_status',DB::raw('(no_of_likes + no_of_thanks) as chat_total_thank_and_like'))
 						->with('user',function ($query) {$query->where('user_status','=','1');})
 						// ->withCount('comments as commentcount')
 						->where('chat_status','=','0')
