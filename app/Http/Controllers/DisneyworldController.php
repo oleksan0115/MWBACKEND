@@ -1575,7 +1575,7 @@ $entries = $xpath->query($query);
 					->update([
 					'chat_reply_update_time' => now(),
 					'chat_msg' => $update_msg,
-					'chat_type' => $chat_type ? '1': '0'
+					'chat_type' => $chat_type
 					]);
 					return response()->json(['status' => 201, 'data' =>	'Post Updated Successfully']);
 					}
