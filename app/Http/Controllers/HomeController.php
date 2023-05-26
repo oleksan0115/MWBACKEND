@@ -2259,6 +2259,7 @@ class HomeController extends Controller
 					$update_chat_id = $request['chat_id'];
 					$update_id = $request['chat_reply_id'];
 					$update_msg = $request['chat_reply_msg'];
+					$chat_type = $request['chat_type'];
 					$id = $request['id'];
 					
 				
