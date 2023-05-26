@@ -1223,7 +1223,7 @@ class HomeController extends Controller
                             $entry->chat_reply_update_time = NOW();
                             $entry->chat_time = NOW();
                             $entry->ip_address = $clientIP;
-							$entry->chat_type = false;
+							$entry->chat_type = $chat_type;
                             $entry->save();
                             
                             $last_inserted_id = $entry->id;
