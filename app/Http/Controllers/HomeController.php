@@ -357,7 +357,7 @@ class HomeController extends Controller
                             $q->where('tags_id', $id);
                             })
 							
-	                       ->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','mapping_url','chat_reply_update_time', 'chat_type')
+	                       ->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_thanks as thankcount','no_of_likes as likecount','mapping_url','chat_reply_update_time', 'chat_type')
 	                     
                             ->with('tagcomposit.gettagged')
 						    ->with('chatroom')
