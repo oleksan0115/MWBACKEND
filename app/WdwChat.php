@@ -119,7 +119,7 @@ class WdwChat extends Model
 		$user_id = $user->user_id;
 		return $this->belongsTo('App\WdwThankYou','chat_id','chat_id')->select(['chat_id','status','user_id'])->where
 								 ([
-								 ['user_id', '=', $user_id],
+								//  ['user_id', '=', $user_id],
 								 ['status', '=', '1'],
 								 ]);
 		}
