@@ -2267,18 +2267,26 @@ class HomeController extends Controller
 					$update_id = $request['chat_reply_id'];
 					$update_msg = $request['chat_reply_msg'];
 					$id = $request['id'];
+					$chat_img = $request['chat_img'];
 					
 				
 				
 					
 					if($type == 'P')
 					{
-					TblChat::where([['chat_id', '=', $update_chat_id ]])
-					->update([
-					'chat_reply_update_time' => now(),
-					'chat_msg' => $update_msg,
-				
-					]);
+						if($chat_img == 'true') 
+							TblChat::where([['chat_id', '=', $update_chat_id ]])
+							->update([
+								'chat_reply_update_time' => now(),
+								'chat_msg' => $update_msg
+							]);
+						else
+							TblChat::where([['chat_id', '=', $update_chat_id ]])
+							->update([
+								'chat_reply_update_time' => now(),
+								'chat_msg' => $update_msg,
+								'chat_img' => ''
+							]);
 					return response()->json(['status' => 201, 'data' =>	'Post Updated Successfully']);
 					}
 					else if($type == 'C')
