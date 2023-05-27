@@ -363,6 +363,9 @@ class HomeController extends Controller
 						    ->with('chatroom')
 						   ->with('user')
 						   ->with('topimages')
+						   ->with(['isthankyou' => function($query) use ($user) {
+							$query->where('user_id', $user);
+						   }])
 	                       ->withCount('comments as commentcount')
 						   ->whereNotIn('chat_room_id', $permissionArray)	  
 	                       ->orderBy($time, 'DESC')
@@ -445,6 +448,9 @@ class HomeController extends Controller
 						    ->with('chatroom')
 						   ->with('user')
 						   ->with('topimages')
+						   ->with(['isthankyou' => function($query) use ($user) {
+								$query->where('user_id', $user);
+					   		}])
 	                       ->withCount('comments as commentcount')
 							->whereNotIn('chat_room_id', $permissionArray)
 	                      ->orderBy($time, 'DESC')
