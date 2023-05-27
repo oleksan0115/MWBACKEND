@@ -2269,8 +2269,6 @@ class HomeController extends Controller
 					$id = $request['id'];
 					$chat_img = $request['chat_img'];
 					
-				
-				
 					
 					if($type == 'P')
 					{
