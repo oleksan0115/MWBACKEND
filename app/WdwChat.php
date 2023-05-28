@@ -25,7 +25,7 @@ class WdwChat extends Model
         'mapping_url',
         'chat_reply_update_time',
         'chat_status',
-        'chat_type',
+        // 'chat_type',
         'posted_from',
         'chat_room_id',
         'chat_room_name',
