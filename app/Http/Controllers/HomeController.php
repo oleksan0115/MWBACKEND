@@ -169,7 +169,7 @@ class HomeController extends Controller
 							['chat_room_id', '=', 1],
 							['chat_msg', 'LIKE', '%'. $searchtext. '%'],
 							])
-	                       ->select('chat_id','chat_status','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time','islock')
+	                       ->select('chat_id','chat_status','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time','islock', 'chat_type')
 						    ->with('chatroom')
 						   ->with('user')
 						   ->with('user.getuserlogodetails.speciallogo')
@@ -209,7 +209,7 @@ class HomeController extends Controller
                             return $query->where('chat_room_id', '=', $chat_room_id);
                             })
 							 */
-	                       ->select('chat_id','chat_status','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time','islock')
+	                       ->select('chat_id','chat_status','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time','islock', 'chat_type')
 						    ->with('chatroom')
 						   ->with('user')
 						   ->with('user.getuserlogodetails.speciallogo')
@@ -244,7 +244,7 @@ class HomeController extends Controller
 							['mapping_url', '!=', ''],
 						    ['chat_room_id', '=', $chat_room_id],
 						    ])
-	                       ->select('chat_id','chat_status','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time','islock')
+	                       ->select('chat_id','chat_status','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time','islock', 'chat_type')
 						    ->with('chatroom')
 						   ->with('user')
 						   ->with('user.getuserlogodetails.speciallogo')
@@ -285,7 +285,7 @@ class HomeController extends Controller
 	
 	$total_list =  TblChat::where([['chat_id', '=', $stick_chatid]])
 						    
-	                       ->select('chat_id','chat_status','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','mapping_url','chat_reply_update_time','islock')
+	                       ->select('chat_id','chat_status','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','mapping_url','chat_reply_update_time','islock', 'chat_type')
 						    ->with('chatroom')
 						   ->with('user')
 						   ->with('user.getuserlogodetail.speciallogo')
@@ -357,12 +357,15 @@ class HomeController extends Controller
                             $q->where('tags_id', $id);
                             })
 							
-	                       ->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','mapping_url','chat_reply_update_time')
+	                       ->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_thanks as thankcount','no_of_likes as likecount','mapping_url','chat_reply_update_time', 'chat_type')
 	                     
                             ->with('tagcomposit.gettagged')
 						    ->with('chatroom')
 						   ->with('user')
 						   ->with('topimages')
+						   ->with(['isthankyou' => function($query) use ($user) {
+							$query->where('user_id', $user);
+						   }])
 	                       ->withCount('comments as commentcount')
 						   ->whereNotIn('chat_room_id', $permissionArray)	  
 	                       ->orderBy($time, 'DESC')
@@ -434,17 +437,16 @@ class HomeController extends Controller
 							['chat_msg', 'LIKE', '%'. $searchtext. '%'],
 							['mapping_url', '!=', ''],
 							])
-				        
-						  // ->whereHas('tagcomposit',  function ($q) use ($id) {
-        //                     $q->where('tags_id', $id);
-        //                     })
 							
-	                       ->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time')
+	                       ->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','chat_reply_update_time', 'chat_type')
 	                     
                             ->with('tagcomposit.gettagged')
 						    ->with('chatroom')
 						   ->with('user')
 						   ->with('topimages')
+						   ->with(['isthankyou' => function($query) use ($user) {
+								$query->where('user_id', $user);
+					   		}])
 	                       ->withCount('comments as commentcount')
 							->whereNotIn('chat_room_id', $permissionArray)
 	                      ->orderBy($time, 'DESC')
@@ -1021,7 +1023,7 @@ class HomeController extends Controller
 	{  
 
 	$chatid = $request->id;
-	$postdetail =  TblChat::select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes')
+	$postdetail =  TblChat::select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes', 'chat_type')
 							->with('user')
 						   ->with('topimages')
 	                       ->with('thanks')
@@ -1182,6 +1184,7 @@ class HomeController extends Controller
               $username = $user->user_name;
         
               $auth_isverfied = $user->isvarified;
+			  $chat_type = $request['chat_type'];
 				if($auth_isverfied == 0)
 				{			  
 					return response()->json(['status' => 201, 'data' =>array('message'=>'Your email has not been verified yet. Go to your Profile, then click on the Verify Email link to verify after you can make a post and comment') ]);
@@ -1215,7 +1218,6 @@ class HomeController extends Controller
                             $entry->mapping_url = $next_id.'/'.$small;
                             $entry->chat_video = '';
                             $entry->chat_img = '';
-                        
                             $entry->showonmain = '';
                             $entry->mac_address = '';
                             $entry->posted_from = '';
@@ -1223,6 +1225,7 @@ class HomeController extends Controller
                             $entry->chat_reply_update_time = NOW();
                             $entry->chat_time = NOW();
                             $entry->ip_address = $clientIP;
+							$entry->chat_type = $chat_type;
                             $entry->save();
                             
                             $last_inserted_id = $entry->id;
@@ -1866,7 +1869,7 @@ class HomeController extends Controller
 	$postdata = TblChat::where([
 								['user_id', '=', $userid],
 								['chat_status', '=', 0],])
-						->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','islock')
+						->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','mapping_url','islock', 'chat_type')
 	                    ->with('chatroom')
 						->with('topimages')
 						->with('isbookmark')
@@ -2258,18 +2261,16 @@ class HomeController extends Controller
 					$update_chat_id = $request['chat_id'];
 					$update_id = $request['chat_reply_id'];
 					$update_msg = $request['chat_reply_msg'];
+					$chat_type = $request['chat_type'];
 					$id = $request['id'];
-					
-				
-				
-					
+
 					if($type == 'P')
 					{
 					TblChat::where([['chat_id', '=', $update_chat_id ]])
 					->update([
 					'chat_reply_update_time' => now(),
 					'chat_msg' => $update_msg,
-				
+					'chat_type' => $chat_type
 					]);
 					return response()->json(['status' => 201, 'data' =>	'Post Updated Successfully']);
 					}
@@ -3913,7 +3914,12 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 		$searchtext = $request->name;
 		$searchtext=str_replace("@","",$searchtext);
 		$searchtext=str_replace(" ","%",$searchtext);
-		$total_list =  User::where([['user_name', 'LIKE', $searchtext. '%'],])->select('user_id as id','user_name as value','image')->take(30)->get();
+		// $total_list =  User::where([['user_name', 'LIKE', $searchtext. '%'],])->select('user_id as id','user_name as value','image')->take(30)->get();
+
+		if($searchtext[strlen($searchtext)-1] == '_')
+			$searchtext = substr($searchtext, 0, strlen($searchtext) - 1) . '\_';
+		$total_list = DB::select(DB::raw("SELECT user_id as id, user_name as value, image FROM tbl_user WHERE user_name LIKE '". $searchtext . "%' ". "LIMIT 30"));
+
 		return response()->json(['status' => 200, 'data' =>	$total_list ]);
 			
 	}
@@ -4679,7 +4685,7 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 	$d_startdate = date('Y-m-d',strtotime("-1 days")); //date('Y-m-d'); 
 	$d_enddate =  date('Y-m-d');
 	$bestoftheday = [];		
-	$bestoftheday = 	TblChat::select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','iswatermark','mapping_url','chat_status',DB::raw('(no_of_likes + no_of_thanks) as chat_total_thank_and_like'))
+	$bestoftheday = 	TblChat::select('chat_id','user_id','chat_msg','chat_img', 'chat_type','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','iswatermark','mapping_url','chat_status',DB::raw('(no_of_likes + no_of_thanks) as chat_total_thank_and_like'))
 						->with('user',function ($query) {$query->where('user_status','=','1');})
 						// ->withCount('comments as commentcount')
 						->where('chat_status','=','0')
@@ -4697,7 +4703,7 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 	$w_startdate = date('Y-m-d', strtotime("-$dayofweek day") );
 	$w_enddate =   date('Y-m-d', strtotime("+$weekend day") );
 	$bestoftheweek = [];		
-	$bestoftheweek = 	TblChat::select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','iswatermark','mapping_url','chat_status',DB::raw('(no_of_likes + no_of_thanks) as chat_total_thank_and_like'))
+	$bestoftheweek = 	TblChat::select('chat_id','user_id','chat_msg','chat_img', 'chat_type','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','iswatermark','mapping_url','chat_status',DB::raw('(no_of_likes + no_of_thanks) as chat_total_thank_and_like'))
 						->with('user',function ($query) {$query->where('user_status','=','1');})
 						// ->withCount('comments as commentcount')
 						->where('chat_status','=','0')
@@ -4716,7 +4722,7 @@ $sql = "( SELECT  tbl_users_taged.user_id as user_id ,tbl_users_taged.chat_id as
 	$m_startdate = date('Y-m-d', strtotime(date('m').'/01/'.date('Y').' 00:00:00'));
 	$m_enddate =   date('Y-m-d', strtotime('-1 second',strtotime('+1 month',strtotime(date('m').'/01/'.date('Y').' 00:00:00')))); 
 	$bestofthemonth = [];		
-	$bestofthemonth = 	TblChat::select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','iswatermark','mapping_url','chat_status',DB::raw('(no_of_likes + no_of_thanks) as chat_total_thank_and_like'))
+	$bestofthemonth = 	TblChat::select('chat_id','user_id','chat_msg','chat_img', 'chat_type','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount','iswatermark','mapping_url','chat_status',DB::raw('(no_of_likes + no_of_thanks) as chat_total_thank_and_like'))
 						->with('user',function ($query) {$query->where('user_status','=','1');})
 						// ->withCount('comments as commentcount')
 						->where('chat_status','=','0')
