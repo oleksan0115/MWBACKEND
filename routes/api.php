@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 Route::group([
     'prefix' => 'v1/auth'
 ], function ($router) {
-    
+
 	Route::post('login', 'Auth\LoginController@login');
 	Route::get('param', 'Auth\LoginController@loginWithUserId'); //from mobile login to a screen redirect to home
 	// Route::get('user/{id}', 'Auth\LoginController@loginWithUserIdToMw');//from mobile login to a screen redirect to mw page
@@ -27,12 +27,12 @@ Route::group([
 	Route::post('changePassword', 'Auth\ResetPasswordController@changePassword');
 	Route::post('resetPassword', 'Auth\ResetPasswordController@resetPassword');
 	Route::post('forgotPassword', 'Auth\ResetPasswordController@forgotPassword');
-  
+
 });
 
 Route::group([ 'prefix' => 'v1'], function ($router) {
 
-	
+	Route::get('getInitialQuestions', 'QuestionsControllerApi@getInitialQuestionsApi');
 	Route::get('home', 'HomeController@home');
 	Route::get('home/search/post/{chat_msg}', 'HomeController@home');
 	Route::get('home/{chat_room_id}', 'HomeController@home');
@@ -101,23 +101,23 @@ Route::group([ 'prefix' => 'v1'], function ($router) {
 	Route::get('topMwByQualityPost', 'HomeController@topMwByQualityPost');
 	Route::get('topMousewaiter', 'HomeController@topMousewaiter');
 	Route::get('topNewsFeatured', 'HomeController@topNewsFeatured');
-	
+
 	Route::post('verifyMail', 'HomeController@verifyMail'); //verifyMail
 	Route::get('confirmationMail', 'HomeController@confirmationMail');// hit when user press link from mailbox
 	Route::get('resetConfirmationMail', 'HomeController@resetConfirmationMail');// hit when user press link from mailbox
-	
+
 	Route::post('suscribeOrUnsuscribePost', 'HomeController@suscribeOrUnsuscribePost'); //get update via email(my posts) mw page
-	
-	
+
+
 	Route::post('postSuscribeUnsuscribe', 'HomeController@postSuscribeUnsuscribe');// from toggle menu
-	
+
 	Route::get('updateCreditByUserId', 'MobileController@updateCreditByUserId');
-	
-	
+
+
 	Route::post('PostLiveApi', 'HomeController@PostLiveApi');
-	
-	
-	
+
+
+
 	Route::get('disneyworldHome', 'DisneyworldController@disneyworldHome');
 	Route::get('disneyworldHome/{chat_room_id}', 'DisneyworldController@disneyworldHome');
 	Route::get('disneyworldHome/search/post/{chat_msg}', 'DisneyworldController@disneyworldHome');
@@ -160,9 +160,13 @@ Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'v1'], function() {
 
 
 
-  
+
 
 // Not Found
 Route::fallback(function(){
  return response()->json(['message' => 'Resource not found.'], 404);
 });
+
+
+//Get All Initial Questions Api
+
