@@ -16,7 +16,7 @@ Route::get('/adminLogin', 'Admin\Auth\LoginController@adminLoginPage')->name('ad
 Route::post('/admin', 'Admin\Auth\LoginController@adminLogin')->name('backend.admin');
 Route::get('/logout', 'Admin\Auth\LoginController@logout');
 
-Route::group(['middleware' => ['admin']], function () { 
+Route::group(['middleware' => ['admin']], function () {
 // dashboard controller
 
 Route::get('/dashboard', 'Admin\DashboardController@dashboard')->name('dashboard')->middleware('admin');
@@ -44,6 +44,20 @@ Route::get('/userCreditSettingAdd', function () { return view('layouts.creditSal
 Route::post('/userCreditSetting', 'Admin\UserController@userCreditSetting')->name('backend.add_user_credit_setting');
 Route::get(	'/userCreditSettingEdit', 'Admin\UserController@userCreditSettingEdit');
 Route::post('/userCreditSettingEdit', 'Admin\UserController@userCreditSetting')->name('backend.edit_user_credit_setting');
+
+//initial questions
+Route::get('/initialQuestion', 'Admin\QuestionsControllerAdmin@index');
+Route::get('/initialQuestionAdd', 'Admin\QuestionsControllerAdmin@add');
+Route::post('/initialQuestionInsert', 'Admin\QuestionsControllerAdmin@insert')->name('backend.initialQuestionInsert');
+Route::get('/initialQuestionEdit', 'Admin\QuestionsControllerAdmin@edit');
+Route::post('/initialQuestionUpdate', 'Admin\QuestionsControllerAdmin@update')->name('backend.initialQuestionUpdate');
+
+//initial questions
+  Route::get('/questionCategory', 'Admin\QuestionsCategoryController@index');
+  Route::get('/questionCategoryAdd', 'Admin\QuestionsCategoryController@add');
+  Route::post('/questionCategoryInsert', 'Admin\QuestionsCategoryController@insert')->name('backend.questionCategoryInsert');
+  Route::get('/questionCategoryEdit', 'Admin\QuestionsCategoryController@edit');
+  Route::post('/questionCategoryUpdate', 'Admin\QuestionsCategoryController@update')->name('backend.questionCategoryUpdate');
 
 
 //product category(sticker) controller
