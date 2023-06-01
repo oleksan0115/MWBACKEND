@@ -1316,7 +1316,7 @@ $entries = $xpath->query($query);
             						
 						               // $replydata=	CommentReply::where('id', '=', $entry->id)->with(['replyuser'])->get();
 						                
-						              $replydata=	WdwChatReplyReply::where([['chat_id', '=', $chatid],['chat_reply_id', '=', $commented_id],])->with(['replyuser']) ->orderBy('chat_reply_date', 'DESC')->get();
+						              $replydata=	WdwChatReplyReply::where([['chat_id', '=', $chatid],['chat_reply_id', '=', $commented_id],])->with(['replyuser']) ->orderBy('chat_reply_date', 'ASC')->get();
 						      
 						            
 						            
@@ -1580,16 +1580,16 @@ $entries = $xpath->query($query);
 					}
 					else if($type == 'C')
 					{
-					WdwChat::where([['chat_id', '=', $update_chat_id ]])
-					->update([
-					'chat_reply_update_time' => now(),
-					]);
-					
-					WdwChatReply::where([['chat_reply_id', '=', $update_id ]])
-					->update([
-					'chat_reply_msg' => $update_msg,
-					]);
-					return response()->json(['status' => 201, 'data' =>	'Comment Updated Successfully']);
+						WdwChat::where([['chat_id', '=', $update_chat_id ]])
+						->update([
+						'chat_reply_update_time' => now(),
+						]);
+						
+						WdwChatReply::where([['chat_reply_id', '=', $update_id ]])
+						->update([
+						'chat_reply_msg' => $update_msg,
+						]);
+						return response()->json(['status' => 201, 'data' =>	'Comment Updated Successfully']);
 					}
 					else if($type == 'R')
 					{
