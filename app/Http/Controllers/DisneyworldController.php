@@ -645,11 +645,13 @@ class DisneyworldController extends Controller
 	}
 	$userdata = User::where('user_id',$userid)->select('user_id','user_name','user_email','image','rank','position','totalpoints','user_status','creation_date as member_since','default_park as overall_rank')->first();
 	$postdata = WdwChat::where('user_id',$userid)
-						->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','mapping_url','islock')
+						->select('chat_id','user_id','chat_msg','chat_img','chat_video','chat_room_id','chat_time','no_of_likes as likecount','no_of_thanks as thankcount', 'mapping_url','islock')
 	                    ->with('chatroom')
 						->with('topimages')
 						->with('isbookmark')
-	                    ->with('isthankyou')
+	                    ->with(['isthankyou' => function($query) use ($userid) {
+							$query->where('user_id', $userid);
+					   	}])
 	                    ->with('checksticky')
 	                    ->withCount('comments as commentcount')
 						->whereNotIn('chat_id',$deleted_chat_id)

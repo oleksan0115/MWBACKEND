@@ -1876,7 +1876,9 @@ class HomeController extends Controller
 	                    ->with('chatroom')
 						->with('topimages')
 						->with('isbookmark')
-	                    ->with('isthankyou')
+	                    ->with(['isthankyou' => function($query) use ($userid) {
+							$query->where('user_id', $userid);
+					   	}])
 	                    ->with('checksticky')
 	                    ->withCount('comments as commentcount')
 						->whereNotIn('chat_id',$deleted_chat_id)
